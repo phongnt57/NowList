@@ -1,4 +1,3 @@
-@bllt/quady-list-component
 ===============================================
 custom list
 
