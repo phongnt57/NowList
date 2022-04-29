@@ -1,6 +1,5 @@
 import {createCustomElement, actionTypes} from '@servicenow/ui-core';
 import snabbdom from '@servicenow/ui-renderer-snabbdom';
-
 import styles from './styles.scss';
 
 
@@ -116,6 +115,7 @@ createCustomElement('bllt-quady-list-component', {
 		data: [],
 	},
 	properties: {
+		// no longer use. ignore
         list: {default: [{rfcId: "RFC-001", subject:"subject", url:"google.com", createTime:"2022-04-21" }]}
     },
 	actionHandlers: {
