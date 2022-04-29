@@ -1,0 +1,60 @@
+@import '@servicenow/sass-kit/host';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+.now-grid {
+    position: relative;
+    width: 100%;
+    color: RGB(var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)));
+    font-family: var(--now-font-family,"Source Sans Pro",Arial,sans-serif);
+    font-size: 1rem;
+}
+.auto {
+    table-layout: auto;
+    width: 100%;
+}
+.now-grid th {
+    background: RGB(var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255)));
+    border-width: initial;
+    border-style: none;
+    border-image: initial;
+    padding: 0px;
+    position: sticky;
+    text-align: left;
+    top: 0px;
+    transform: scale(0.999);
+    white-space: nowrap;
+    z-index: 1;
+    border-color: RGB(var(--now-color_border--secondary,var(--now-color--neutral-5,172,180,181)));
+    vertical-align: bottom;
+}
+.now-grid th .sn-text-link {
+    padding-top: calc(var(--now-scale-space--sm, 1)*0.5rem);
+    padding-bottom: calc(var(--now-scale-space--sm, 1)*0.5rem);
+    align-items: center;
+    color: RGB(var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)));
+    display: flex;
+    font-size: 1rem;
+    min-height: calc(1.25rem + var(--now-grid-cell--scale-size-block, 1)*2.5rem/2);
+    height: calc(1.25rem + var(--now-grid-cell--scale-size-block, 1)*2.5rem/2);
+    position: relative;
+    text-decoration: none;
+    font-weight: 700;
+    width: 100%;
+}
+.now-grid th .sn-text-link a {
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    flex: 1 1 auto;
+}
+.now-grid th .sn-text-link a > span {
+    position: relative;
+    display: inline-block;
+    text-overflow: ellipsis;
+    flex: 1 1 100%;
+    max-width: fit-content;
+}
