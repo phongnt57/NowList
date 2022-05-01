@@ -1,5 +1,12 @@
 @import '@servicenow/sass-kit/host';
 
+.sn-list-header {
+    display: flex;
+    padding: calc(var(--now-scale-space--lg, 1)*1rem);
+    width: 100%;
+    justify-content: space-between;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -58,3 +65,61 @@
     flex: 1 1 100%;
     max-width: fit-content;
 }
+
+.sn-list-header-title-container {
+    align-items: center;
+    display: flex;
+}
+
+.now-grid tr {
+    padding-top: calc(var(--now-scale-space--xs, 1)*0.25rem);
+    padding-bottom: calc(var(--now-scale-space--xs, 1)*0.25rem);
+    outline: none;
+}
+.now-grid tr:nth-child(2n+1) {
+    background: RGB(var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255)));
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+.now-grid .sn-text-link {
+    padding-top: calc(var(--now-scale-space--sm, 1)*0.5rem);
+    padding-bottom: calc(var(--now-scale-space--sm, 1)*0.5rem);
+    align-items: center;
+    color: RGB(var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)));
+    display: flex;
+    font-size: 1rem;
+    min-height: calc(1.25rem + var(--now-grid-cell--scale-size-block, 1)*2.5rem/2);
+    position: relative;
+    text-decoration: none;
+    width: 100%;
+    height: auto;
+}
+.margin-x2 {
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
+
+input[type=text], select{
+  padding: 8px 16px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  }
+  .now-heading {
+      margin-right: 20px;
+  }
+  .bottom-paging {
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    
+  }
+  .cursor-pointer {
+      cursor: pointer;
+  }
