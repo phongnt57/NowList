@@ -19,6 +19,7 @@
 		"@servicenow/cli-component-archetype": "21.0.7",
 		"@servicenow/library-translate": "quebec",
 		"@servicenow/now-button": "^19.8.2-ecd",
+		"@servicenow/now-card": "^19.8.2-ecd",
 		"@servicenow/now-icon": "^19.8.2-ecd",
 		"@servicenow/now-modal": "^19.8.2-ecd",
 		"@servicenow/now-popover": "^19.8.2-ecd",

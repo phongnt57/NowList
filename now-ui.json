@@ -4,11 +4,12 @@
 	        "innerComponents": [
 				"now-button",
 				"now-icon",
-				"now-popover"
+				"now-popover",
+				"now-card"
 			],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
-				"label": "My Component",
+				"label": "RFC Component",
 				"icon": "document-outline",
 				"description": "A description of my component",
 				"category": "primitives"
@@ -18,7 +19,12 @@
 					"description":"Click new",
 					 "label": "On Click New",
 					 "action": "EVENT_CREATE_NEW_RFC",
-					 "payload": []
+					 "payload": "string"
+				},
+				{
+					"description":"Click detail",
+					 "label": "On Click Detail",
+					 "action": "EVENT_DETAIL" 
 				}
 			],
 			"properties": [

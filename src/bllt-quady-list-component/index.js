@@ -1,10 +1,11 @@
 import { createCustomElement, actionTypes } from '@servicenow/ui-core';
-import snabbdom from '@servicenow/ui-renderer-snabbdom';
+import { snabbdom, createRef } from '@servicenow/ui-renderer-snabbdom';
 import '@servicenow/now-icon';
 import '@servicenow/now-button';
 import '@servicenow/now-popover'
 import '@servicenow/now-modal'
-// import '@servicenow/sn-content'
+import '@servicenow/now-card'
+
 
 import styles from './styles.scss';
 
@@ -14,8 +15,8 @@ const requestSearchResults = ({ state, dispatch }) => {
 		linesPerPage: state.linesPerPage,
 		selectedPage: 1,
 	});
-
 };
+
 const clickNext = (state, dispatch) => {
 	if (state.currentPage < state.pages)
 		dispatch("SEARCH_RESULTS_REQUESTED", {
@@ -38,44 +39,100 @@ const clickLatest = (state, dispatch) => {
 	})
 }
 
-const showModalPageSize = (updateState) => {
-	updateState({ openModalPageSize: true })
+
+
+const onChangeLinePerPage = (linesPerPage, dispatch, updateState) => {
+	updateState({ linesPerPage: linesPerPage })
+	dispatch("SEARCH_RESULTS_REQUESTED", {
+		linesPerPage: linesPerPage,
+		selectedPage: 1,
+	});
 }
 
+const onSearchKeyword = (searchRef, e, dispatch, state, updateState) => {
+	console.log(e.which)
+	if (e.which == 13) {
+		const value = searchRef.current.value;
+		updateState({ searchKeyword: value });
+		dispatch("SEARCH_RESULTS_REQUESTED", {
+			linesPerPage: state.linesPerPage,
+			selectedPage: 1,
+			searchKeyword: value
+		});
+
+	}
+
+}
+const onChangeSelect = (e, updateState) => {
+	const action = e.target.value;
+	if(action== "delete") updateState({openModal: true});
+
+}
+const onComment =(e)=>{
+	console.log(e.target.value);
+
+}
 
 const view = (state, { updateState, dispatch }) => {
-
+	const searchRef = createRef();
 
 	return (
 		<div>
-			<div className="sn-list-header">
+			<now-modal
+				opened={state.openModal}
+				size='sm'
+				header-label='Delete RFC'
+				footer-actions='[
+             {
+              "variant": "primary",
+              "label": "Save"
+              }
+             ]'
+			>
+				 Delete {state.selectIds.toString()}
+				 <br/>
+				<textarea style={{ width:"100%"}} row={10} on-input={onComment}></textarea>
 
+			</now-modal>
+			<div className="sn-list-header">
 				<div className="sn-list-header-title-container">
 					<now-popover interaction-type="dialog" positions={[{ "target": "bottom-center", "content": "top-center" }]}
 					>
 						<now-button slot="trigger" icon="menu-fill" size="md" />
-						<now-button slot="content">
+						<now-card slot="content">
 							<div>
-								<h1>ddwdwdw</h1>
-								<input type="text" />
+								{[5, 10, 15, 20, 50, 100].map(item => (
+									<div
+										on-click={() => onChangeLinePerPage(item, dispatch, updateState)}
+										style={{ display: 'flex', padding: '5px', cursor: 'pointer' }} >
+										{state.linesPerPage === item ?
+											<now-icon icon="check-fill" size="md" />
+											: <div style={{ width: '16px', height: '16px' }}></div>
+										}
+										<div>{item} rows per page</div>
+									</div>
+								))}
 							</div>
-						</now-button>
+						</now-card>
 
 					</now-popover>
 
 					<h2 className="now-heading -header -secondary"> RFC list</h2>
 					<div className="margin-x2">Search</div>
-					<input className="header-input" type="text" placeholder="Search" />
+					<input className="header-input" type="text"
+						ref={searchRef}
+						on-keyup={e => onSearchKeyword(searchRef, e, dispatch, state, updateState)}
+						placeholder="Search" />
 				</div>
 				<div></div>
 				<div className="sn-list-header-title-container">
 					<now-icon className="margin-x2" icon="gear-outline" size="lg"></now-icon>
 
-					<select id="selection" className="margin-x2">
-						<option value="volvo">Action on select row...</option>
-						<option value="saab">Delete</option>
+					<select id="selection" className="margin-x2" onchange={e => onChangeSelect(e, updateState)}>
+						<option value="default">Action on select row...</option>
+						<option value="delete">Delete</option>
 					</select>
-					<now-button onclick={() => dispatch("EVENT_CREATE_NEW_RFC", { 'event-payload': 'createnew' })}
+					<now-button onclick={() => dispatch("EVENT_CREATE_NEW_RFC", { 'eventpayload': 'createnew' })}
 						className="margin-x2" label="New" variant="primary" size="md"  ></now-button>
 
 
@@ -89,7 +146,7 @@ const view = (state, { updateState, dispatch }) => {
 							<th className="-checkbox"></th>
 							<th className="list-column-header" dir="ltr" id="id_0" role="columnheader">
 								<div className="sn-text-link hide-columnreorder-off">
-									<a type="button">
+									<a type="button" >
 										<span className="column-resizing-enabled">ID</span>
 									</a>
 
@@ -134,14 +191,19 @@ const view = (state, { updateState, dispatch }) => {
 								<tr className="row">
 									<td>
 										<div className="sn-grid-checkbox">
-											<input type="checkbox" />
+											<input
+												checked={state.selectIds.indexOf(item.rfcId) > -1}
+												type="checkbox"
+												onchange={() => onCheckChange(item.rfcId, state, updateState)} />
 										</div>
 
 									</td>
 
 									<td>
-										<div className="sn-text-link">
-											{item.rfcId}
+										<div className="sn-text-link cursor-pointer">
+											<a className="text-link"
+												on-click={() => dispatch("EVENT_DETAIL", { 'event-payload': item.rfcId })}
+											>{item.rfcId}</a>
 										</div>
 									</td>
 									<td>
@@ -169,7 +231,7 @@ const view = (state, { updateState, dispatch }) => {
 							))
 						) :
 							(
-								<div>Empty</div>
+								<div className="bottom-paging">Data is empty</div>
 							)
 						}
 
@@ -192,7 +254,7 @@ const view = (state, { updateState, dispatch }) => {
 				<div>
 					{state.linesPerPage * (state.currentPage - 1) + 1}
 					&nbsp; to &nbsp;
-					{state.linesPerPage * state.currentPage}
+					{state.linesPerPage * state.currentPage < state.total ? state.linesPerPage * state.currentPage : state.total}
 					&nbsp;of &nbsp;
 					{state.total}
 				</div>
@@ -213,6 +275,18 @@ const view = (state, { updateState, dispatch }) => {
 	);
 };
 
+const onCheckChange = (id, state, updateState) => {
+	let selectIds = [...state.selectIds];
+	let index = selectIds.indexOf(id);
+	if (index > -1) {
+		selectIds.splice(index, 1);
+	} else {
+		selectIds.push(id);
+	}
+	updateState({ selectIds });
+
+}
+
 createCustomElement('bllt-quady-list-component', {
 	renderer: { type: snabbdom },
 	view,
@@ -223,8 +297,10 @@ createCustomElement('bllt-quady-list-component', {
 		pages: 0,
 		total: 0,
 		currentPage: 0,
-		linesPerPage: 4,
-		openModalPageSize: false
+		linesPerPage: 5,
+		openModal: false,
+		searchKeyword: '',
+		selectIds: []
 	},
 	properties: {
 		// no longer use. ignore
@@ -232,6 +308,15 @@ createCustomElement('bllt-quady-list-component', {
 	},
 	actionHandlers: {
 		[actionTypes.COMPONENT_CONNECTED]: requestSearchResults,
+
+		"NOW_MODAL#FOOTER_ACTION_CLICKED" : ({ action, state, updateState }) => {
+			console.log(action)
+
+
+		},
+		"NOW_MODAL#OPENED_SET": ({ action, state, updateState }) =>{
+			updateState({openModal: action.payload.value});
+		},
 
 		SEARCH_RESULTS_REQUESTED: ({ action, state, updateState }) => {
 			const payload = action.payload;
@@ -241,8 +326,10 @@ createCustomElement('bllt-quady-list-component', {
 					"selectedPage": payload.selectedPage
 				}
 			};
-			// const API = "https://api.jsonbin.io/b/626e53e6019db46796940c1a";
-			const API = "http://18.178.235.108:8089/trinity/api/sn/rfc/list"
+			if (payload.searchKeyword) body.searchKeyword = payload.searchKeyword;
+			else if (state.searchKeyword) body.searchKeyword = state.searchKeyword;
+			const API = "https://api.jsonbin.io/b/626e53e6019db46796940c1a";
+			// const API = "http://18.178.235.108:8089/trinity/api/sn/rfc/list"
 			fetch(API, {
 				method: 'get',
 				headers: {
