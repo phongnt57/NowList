@@ -5,10 +5,9 @@ import '@servicenow/now-button';
 import '@servicenow/now-popover'
 import '@servicenow/now-modal'
 import '@servicenow/now-card'
-
-
+import '../choose-column'
 import styles from './styles.scss';
-
+import { LIST_COMLUMN } from './constants'
 
 const requestSearchResults = ({ state, dispatch }) => {
 	dispatch("SEARCH_RESULTS_REQUESTED", {
@@ -37,6 +36,7 @@ const clickLatest = (state, dispatch) => {
 		linesPerPage: state.linesPerPage,
 		selectedPage: state.pages,
 	})
+	console.log(state.selectedColumns);
 }
 
 
@@ -50,7 +50,6 @@ const onChangeLinePerPage = (linesPerPage, dispatch, updateState) => {
 }
 
 const onSearchKeyword = (searchRef, e, dispatch, state, updateState) => {
-	console.log(e.which)
 	if (e.which == 13) {
 		const value = searchRef.current.value;
 		updateState({ searchKeyword: value });
@@ -73,6 +72,8 @@ const onComment =(e)=>{
 
 }
 
+
+
 const view = (state, { updateState, dispatch }) => {
 	const searchRef = createRef();
 
@@ -94,6 +95,8 @@ const view = (state, { updateState, dispatch }) => {
 				<textarea style={{ width:"100%"}} row={10} on-input={onComment}></textarea>
 
 			</now-modal>
+
+			
 			<div className="sn-list-header">
 				<div className="sn-list-header-title-container">
 					<now-popover interaction-type="dialog" positions={[{ "target": "bottom-center", "content": "top-center" }]}
@@ -126,7 +129,8 @@ const view = (state, { updateState, dispatch }) => {
 				</div>
 				<div></div>
 				<div className="sn-list-header-title-container">
-					<now-icon className="margin-x2" icon="gear-outline" size="lg"></now-icon>
+					{/* <now-icon className="margin-x2" icon="gear-outline" size="lg"></now-icon> */}
+					<choose-column selectedColumns={state.selectedColumns} submitColumn={updateState}></choose-column>
 
 					<select id="selection" className="margin-x2" onchange={e => onChangeSelect(e, updateState)}>
 						<option value="default">Action on select row...</option>
@@ -300,7 +304,8 @@ createCustomElement('bllt-quady-list-component', {
 		linesPerPage: 5,
 		openModal: false,
 		searchKeyword: '',
-		selectIds: []
+		selectIds: [],
+		selectedColumns: LIST_COMLUMN
 	},
 	properties: {
 		// no longer use. ignore
@@ -310,13 +315,14 @@ createCustomElement('bllt-quady-list-component', {
 		[actionTypes.COMPONENT_CONNECTED]: requestSearchResults,
 
 		"NOW_MODAL#FOOTER_ACTION_CLICKED" : ({ action, state, updateState }) => {
-			console.log(action)
+			console.log("action out")
 
 
 		},
 		"NOW_MODAL#OPENED_SET": ({ action, state, updateState }) =>{
 			updateState({openModal: action.payload.value});
 		},
+
 
 		SEARCH_RESULTS_REQUESTED: ({ action, state, updateState }) => {
 			const payload = action.payload;
@@ -328,8 +334,8 @@ createCustomElement('bllt-quady-list-component', {
 			};
 			if (payload.searchKeyword) body.searchKeyword = payload.searchKeyword;
 			else if (state.searchKeyword) body.searchKeyword = state.searchKeyword;
-			const API = "https://api.jsonbin.io/b/626e53e6019db46796940c1a";
-			// const API = "http://18.178.235.108:8089/trinity/api/sn/rfc/list"
+			// const API = "https://api.jsonbin.io/b/626e53e6019db46796940c1a";
+			 const API = "http://18.178.235.108:8089/trinity/api/sn/rfc/list"
 			fetch(API, {
 				method: 'get',
 				headers: {
@@ -343,8 +349,6 @@ createCustomElement('bllt-quady-list-component', {
 					return response.json();
 				})
 				.then(function (result) {
-					console.log("result");
-					console.log(result);
 					updateState({
 						data: result.results,
 						total: result.pagination.total,
