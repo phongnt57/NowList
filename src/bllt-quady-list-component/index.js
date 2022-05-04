@@ -4,8 +4,9 @@ import '@servicenow/now-icon';
 import '@servicenow/now-button';
 import '@servicenow/now-popover'
 import '@servicenow/now-modal'
-import '@servicenow/now-card'
 import '../choose-column'
+
+import '@servicenow/now-card'
 import styles from './styles.scss';
 import { LIST_COMLUMN } from './constants'
 
