@@ -16,6 +16,17 @@
 				"description": "A description of my component",
 				"category": "primitives"
 			},
+			
+			"properties": [
+				{
+					"name": "apiUrl",
+					"label": "API endpoint",
+					"description": "Ar",
+					"readOnly": false,
+					"fieldType": "string",
+					"defaultValue": "http://18.178.235.108:8089/trinity/api"
+				  }
+			],
 			"actions": [
 				{
 					"description":"Click new",
@@ -27,16 +38,6 @@
 					 "label": "On Click Detail",
 					 "action": "EVENT_QUADY_DETAIL_RFC" 
 				}
-			],
-			"properties": [
-				{
-					"name": "apiUrl",
-					"label": "API endpoint",
-					"description": "Ar",
-					"readOnly": true,
-					"fieldType": "string",
-					"defaultValue": ""
-				  }
 			]
 		
 	    }
