@@ -103,11 +103,17 @@ tr:nth-child(even) {
 }
 
 input[type=text], select{
-  padding: 8px 16px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+     padding-left: 8px;
+     padding-right: 8px;
+    color: RGB(var(--now-color_text--primary,var(--now-color--neutral-18,21,25,32)))!important;
+    height: 32px!important;
+    padding-block-start: 0;
+    padding-block-end: 0;
+    width: auto;
+    border: 1px solid transparent;
+    border-color: RGB(var(--now-form-field--border-color,var(--now-color_border--primary,var(--now-color--neutral-7,143,149,161))));
+    border-radius: 4px;
+    box-shadow: 0 0 0 0 RGBA(var(--now-color--primary-1,79,82,189),.1),inset 0 0 0 0 RGB(var(--now-color--primary-1,79,82,189)),inset 0 0 0 0 RGB(var(--now-color--neutral-0,255,255,255)),inset 0 2px 0 1px RGBA(var(--now-color--neutral-18,21,25,32),.1);
   }
   .now-heading {
       margin-right: 20px;
@@ -131,3 +137,9 @@ input[type=text], select{
   .text-link {
       color: #3c59e7;
   }
+  .sn-last-refreshed {
+    color: RGB(var(--now-color_text--secondary,var(--now-color--neutral-15,44,53,55)));
+    font-size: 1rem;
+    margin-left: calc(var(--now-scale-space--sm, 1)*0.5rem);
+}
+.margin-right--15 { margin-right: -15px;}

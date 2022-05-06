@@ -5,7 +5,9 @@
 				"now-button",
 				"now-icon",
 				"now-popover",
-				"now-card"
+				"now-card",
+				"now-modal",
+				"now-split-button"
 			],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
@@ -18,25 +20,23 @@
 				{
 					"description":"Click new",
 					 "label": "On Click New",
-					 "action": "EVENT_CREATE_NEW_RFC",
-					 "payload": "string"
+					 "action": "EVENT_QUADY_CREATE_RFC"
 				},
 				{
 					"description":"Click detail",
 					 "label": "On Click Detail",
-					 "action": "EVENT_DETAIL" 
+					 "action": "EVENT_QUADY_DETAIL_RFC" 
 				}
 			],
 			"properties": [
 				{
-				  "name": "list",
-				  "label": "data",
-				  "description": "Array list",
-				  "readOnly": false,
-				  "fieldType": "json",
-				  "defaultValue": "{}",
-				  "typeMetadata": {}
-				}
+					"name": "apiUrl",
+					"label": "API endpoint",
+					"description": "Ar",
+					"readOnly": true,
+					"fieldType": "string",
+					"defaultValue": ""
+				  }
 			]
 		
 	    }

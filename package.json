@@ -23,6 +23,7 @@
 		"@servicenow/now-icon": "^19.8.2-ecd",
 		"@servicenow/now-modal": "^19.8.2-ecd",
 		"@servicenow/now-popover": "^19.8.2-ecd",
+		"@servicenow/now-split-button": "^19.8.2-ecd",
 		"@servicenow/sass-kit": "quebec",
 		"@servicenow/sass-theme": "quebec",
 		"@servicenow/ui-core": "quebec",

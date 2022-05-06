@@ -146,6 +146,7 @@ createCustomElement('choose-column', {
 		[actionTypes.COMPONENT_CONNECTED]: initData,
 
 		"NOW_MODAL#FOOTER_ACTION_CLICKED": ({ action, state, updateState, dispatch }) => {
+			console.log("actionin ")
 			const payload = action.payload;
 			if (payload.action.type === "submit-column") {
 				const properties = { ...state.properties };
