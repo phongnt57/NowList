@@ -5,12 +5,12 @@ import '@servicenow/now-button';
 import '@servicenow/now-popover'
 import '@servicenow/now-modal'
 import '@servicenow/now-split-button'
-// import '@servicenow/now-button-stateful'
 import '../choose-column'
 
 import '@servicenow/now-card'
 import styles from './styles.scss';
 import { LIST_COMLUMN, api, headers } from './constants'
+import { LIST_ALL_COMLUMN } from '../choose-column/constants';
 
 const requestSearchResults = ({ state, dispatch }) => {
 	dispatch("SEARCH_RESULTS_REQUESTED", {
@@ -134,6 +134,7 @@ const view = (state, { updateState, dispatch }) => {
 				<div className="sn-list-header-title-container">
 					{/* <now-icon className="margin-x2" icon="gear-outline" size="lg"></now-icon> */}
 					<choose-column
+					    allColumns={LIST_ALL_COMLUMN}
 						selectedColumns={state.selectedColumns}
 						submitColumn={updateState}>
 					</choose-column>

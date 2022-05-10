@@ -1,22 +1,63 @@
 export const LIST_COMLUMN = [
 	{
-		"key": "rfcId","label": "ID"
+		"key": "changeId","label": "Change ID"
 	},
 	
 	{
-		"key": "subject","label": "Subject"
+		"key": "referenceId","label": "Reference Id"
+	},
+	{
+		"key": "referenceCategory","label": "Reference Category"
+	},
+	{
+		"key": "summary","label": "Summary"
+	},
+	{
+		"key": "submitter","label": "Submitter"
+	},
+	{
+		"key": "assignee","label": "Assignee"
 	},
 	{
 		"key": "createdTime","label": "Created Time"
 	},
 	{
-		"key": "url","label": "URL"
+		"key": "updatedTime","label": "Updated Time"
+	},
+	{
+		"key": "status","label": "Status"
+	},
+	
+]; 
+
+export const LIST_ALL_COMLUMN = [
+	{
+		"key": "changeId","label": "Change ID"
+	},
+	
+	{
+		"key": "referenceId","label": "Reference Id"
+	},
+	{
+		"key": "referenceCategory","label": "Reference Category"
+	},
+	{
+		"key": "summary","label": "Summary"
+	},
+	{
+		"key": "submitter","label": "Submitter"
+	},
+	{
+		"key": "assignee","label": "Assignee"
+	},
+	{
+		"key": "createdTime","label": "Created Time"
 	},
 	{
 		"key": "updatedTime","label": "Updated Time"
 	},
 	{
-		"key": "createdBy","label": "Created By"
+		"key": "status","label": "Status"
 	},
 	
 ]; 
@@ -51,11 +92,12 @@ export const headers =  {
 }
 
 export const statusChg = [
-	{id: '', label :"All"},
-	{id: 3100, label: "In Progress"},
-	{ id: 4100, label : "Close"},
-	{ id: 5100, label: "Merged"}
+	{id: '', label :"All", type: "status"},
+	{id: 3100, label: "In Progress",  type: "status"},
+	{ id: 4100, label : "Close",  type: "status"},
+	{ id: 5100, label: "Merged",  type: "status"}
 ];
 
 // export const DEFAULT_BASE_URL = "http://192.168.1.137:8080/trinity/api";
 export const DEFAULT_BASE_URL= "https://jenkins.quady-cloud.com/trinity/api"
+// export const DEFAULT_BASE_URL= "http://localhost:8080/trinity/api"

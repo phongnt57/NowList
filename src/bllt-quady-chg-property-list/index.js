@@ -10,7 +10,7 @@ import '../lot-search-modal'
 import '@servicenow/now-card'
 import '@servicenow/now-tabs'
 import styles from '../styles.scss';
-import { LIST_COMLUMN, api, headers, statusChg, DEFAULT_BASE_URL } from './constants'
+import { LIST_COMLUMN, LIST_ALL_COMLUMN, api, headers, statusChg, DEFAULT_BASE_URL } from './constants'
 
 const requestSearchResults = ({ state, dispatch }) => {
 	dispatch("SEARCH_RESULTS_REQUESTED", {
@@ -67,6 +67,21 @@ const onSearchKeyword = (searchRef, e, dispatch, state, updateState) => {
 
 }
 
+const onEnterLot = (lotRef, e, dispatch, state, updateState) => {
+	if (e.which == 13) {
+		const value = lotRef.current.value;
+		updateState({ selectedLotId: value });
+		dispatch("SEARCH_RESULTS_REQUESTED", {
+			linesPerPage: state.linesPerPage,
+			selectedPage: 1,
+			selectedLotId: value
+		});
+
+	}
+
+}
+
+
 const onComment = (comment, updateState) => {
 	updateState({ comment: comment });
 
@@ -76,22 +91,44 @@ const onComment = (comment, updateState) => {
 
 const view = (state, { updateState, dispatch }) => {
 	const searchRef = createRef();
+	const lotRef = createRef();
 
 	return (
 		<div>
 			<now-modal
 				opened={state.openModal}
 				size='sm'
-				header-label='Delete RFC'
+				header-label='Delete Change Property'
 				footer-actions='[
 					{
 					"variant": "primary",
 					"label": "Submit",
-					"action": "delete" 
+					"type": "delete" 
 					}
 					]'
 			>
-				<div>Delete {state.selectIds.toString()}</div>
+				<div style={{marginBottom:"10px"}}>Delete {state.selectIds.toString()}</div>
+
+				<textarea
+					className="border-input"
+					style={{ width: "100%" }} rows={5}
+					onblur={(e) => onComment(e.target.value, updateState)}></textarea>
+
+			</now-modal>
+
+			<now-modal
+				opened={state.openModalCloseChgProperty}
+				size='sm'
+				header-label='Close Change Property'
+				footer-actions='[
+					{
+					"variant": "primary",
+					"label": "Close All",
+					"type": "close" 
+					}
+					]'
+			>
+				<div style={{marginBottom:"10px"}}>Close {state.selectIds.toString()}</div>
 
 				<textarea
 					className="border-input"
@@ -101,11 +138,12 @@ const view = (state, { updateState, dispatch }) => {
 			</now-modal>
 
 
+
 			<div className="sn-list-header">
 				<div className="sn-list-header-title-container">
 					<now-popover interaction-type="dialog" positions={[{ "target": "bottom-center", "content": "top-center" }]}
 					>
-						<now-icon className="cursor-pointer margin-x2" slot="trigger" icon="menu-fill" size="lg" />
+						<now-button className="cursor-pointer margin-x2" slot="trigger" icon="menu-fill" size="md" />
 						<now-card slot="content">
 							<div>
 								{[5, 10, 15, 20, 50, 100].map(item => (
@@ -124,7 +162,7 @@ const view = (state, { updateState, dispatch }) => {
 
 					</now-popover>
 
-					<h2 className="now-heading -header -secondary"> Change Property List</h2>
+					<div className="now-heading -header -secondary"> Change Property List</div>
 					<div className="margin-x2">Search</div>
 					<input className="header-input" type="text"
 						ref={searchRef}
@@ -134,6 +172,7 @@ const view = (state, { updateState, dispatch }) => {
 				<div></div>
 				<div className="sn-list-header-title-container">
 					<choose-column
+					    allColumns={LIST_ALL_COMLUMN}
 						selectedColumns={state.selectedColumns}
 						submitColumn={updateState}>
 					</choose-column>
@@ -141,13 +180,14 @@ const view = (state, { updateState, dispatch }) => {
 					<now-split-button
 						className="margin-x2"
 						label={`Action on select row(${state.selectIds.length})`}
-						items={[{ "id": "delete", "label": "Delete" }]}
+						items={[{ "id": "delete", "label": "Delete" }, { "id": "close", "label": "Close" }]}
+
 						variant="tertiary"
 						size="md" icon=""
 					></now-split-button>
 
 
-					<now-button onclick={() => dispatch("EVENT_QUADY_CREATE_RFC", { 'eventpayload': 'createnew' })}
+					<now-button onclick={() => dispatch("EVENT_QUADY_CREATE", { 'eventpayload': 'createnew' })}
 						className="margin-x2" label="New" variant="primary" size="md"  ></now-button>
 
 
@@ -164,6 +204,8 @@ const view = (state, { updateState, dispatch }) => {
 						<td>
 							<div className="d-flex">
 								<input type="text"
+								ref={lotRef}
+								on-keyup={e => onEnterLot(lotRef, e, dispatch, state, updateState)}
 								 value={state.selectedLotId}
 								 className="input-search"/>
 								<lot-search-modal
@@ -184,7 +226,7 @@ const view = (state, { updateState, dispatch }) => {
 						<now-tabs 
 						fixed-width={true}
 						 items={statusChg}
-						 selected-item={null} 
+						 selected-item={''} 
 						 size="md"></now-tabs>
 						</td>
 					</tr>
@@ -194,7 +236,7 @@ const view = (state, { updateState, dispatch }) => {
 						<td>
 						<now-tabs 
 						 items={state.groups}
-						 selected-item={null} 
+						 selected-item={''} 
 						 size="md"></now-tabs>
 						</td>
 						
@@ -231,20 +273,20 @@ const view = (state, { updateState, dispatch }) => {
 									<td>
 										<div className="sn-grid-checkbox">
 											<input
-												checked={state.selectIds.indexOf(item.rfcId) > -1}
+												checked={state.selectIds.indexOf(item.changeId) > -1}
 												type="checkbox"
-												onchange={() => onCheckChange(item.rfcId, state, updateState)} />
+												onchange={() => onCheckChange(item.changeId, state, updateState)} />
 										</div>
 
 									</td>
 									{state.selectedColumns.map(column => {
-										if (column.key == "rfcId") {
+										if (column.key == "changeId") {
 											return (
 												<td>
 													<div className="sn-text-link cursor-pointer">
 														<a className="text-link"
-															on-click={() => dispatch("EVENT_QUADY_DETAIL_RFC", { 'event-payload': item.rfcId })}
-														>{item.rfcId}</a>
+															on-click={() => dispatch("EVENT_QUADY_DETAIL", { 'event-payload': item.changeId })}
+														>{item.changeId}</a>
 													</div>
 												</td>
 
@@ -359,6 +401,7 @@ createCustomElement('bllt-quady-chg-property-list', {
 		currentPage: 1,
 		linesPerPage: 5,
 		openModal: false,
+		openModalCloseChgProperty: false,
 		searchKeyword: '',
 		seletedGroup:'',
 		selectedStatusId: '',
@@ -366,7 +409,7 @@ createCustomElement('bllt-quady-chg-property-list', {
 		selectIds: [],
 		selectedColumns: LIST_COMLUMN,
 		comment: "",
-		groups: [{id: null, label: "All"}]
+		groups: [{id: '', label: "All", type: "group"},{id: 'other', label: "other", type: "group"}]
 	},
 	properties: {
 		apiUrl: { default: DEFAULT_BASE_URL }
@@ -377,16 +420,25 @@ createCustomElement('bllt-quady-chg-property-list', {
 		"NOW_MODAL#FOOTER_ACTION_CLICKED": ({ action, state, updateState }) => {
 			console.log(action);
 			const payload = action.payload;
-			// delete RFC
+			let url ="";
+			let method = "get";
+			const body = {
+				changeIds: state.selectIds,
+				comment: state.comment
+			}
+			// delete change property
 			if (payload.action.type === "delete") {
-				const url = state.properties.apiUrl + api.delete_all.path;
-				const body = {
-					rfcIds: selectIds,
-					comment: state.comment
-				}
+				 url = state.properties.apiUrl + api.delete_all.path + "/" + state.selectedLotId;
+				 method = api.delete_all.method;
+			}
+			if (payload.action.type === "close") {
+				url = state.properties.apiUrl + api.close_all.path + "/" + selectedLotId;
+				method = api.close_all.method;
+		   }
+		   
 
 				fetch(url, {
-					method: api.delete_all.method,
+					method: method,
 					headers: headers,
 					body: JSON.stringify(body)
 				})
@@ -407,36 +459,50 @@ createCustomElement('bllt-quady-chg-property-list', {
 					});
 
 
-			}
+			
 
 
 		},
 		"NOW_MODAL#OPENED_SET": ({ action, state, updateState }) => {
-			updateState({ openModal: action.payload.value });
-
+			console.log(action)
+			updateState({ openModal: action.payload.value, openModalCloseChgProperty:action.payload.value ,comment: "" });
 		},
 
 		"NOW_SPLIT_BUTTON#ITEM_CLICKED": ({ action, state, updateState }) => {
 			const payload = action.payload;
-			if (payload.item.id == "delete" && state.selectIds.length > 0) updateState({ openModal: true });
+			if (payload.item.id == "delete" && state.selectIds.length >= 0) updateState({ openModal: true });
+			if (payload.item.id == "close" && state.selectIds.length >= 0) updateState({ openModalCloseChgProperty: true });
+
 
 		},
 
 		"NOW_TABS#SELECTED_ITEM_SET" : ({action, state, updateState}) =>{
 			console.log(action);
+			const item = action.payload.item;
+			const value = action.payload.value;
+			if(item.type == "status") updateState({selectedStatusId: value});
+			if(item.type == "group") updateState({selectedGroup: value});
+			dispatch("SEARCH_RESULTS_REQUESTED", {
+				linesPerPage: state.linesPerPage,
+				selectedPage: 1,
+			});
 
 		},
 
 		SEARCH_RESULTS_REQUESTED: ({ action, state, updateState }) => {
+			console.log("SEARCH_RESULTS_REQUESTED");
+			console.log(state);
 			const payload = action.payload;
 			let body = {
 				"pagination": {
 					"linesPerPage": payload.linesPerPage,
 					"selectedPage": payload.selectedPage
-				}
+				},
+				"selectedStatusId": state.selectedStatusId,
+				"selectedGroup": state.selectedGroup,
+				"searchKeyword": state.searchKeyword
 			};
-			if (payload.searchKeyword) body.searchKeyword = payload.searchKeyword;
-			else if (state.searchKeyword) body.searchKeyword = state.searchKeyword;
+			
 			// const url = "https://api.jsonbin.io/b/626e53e6019db46796940c1a";
 			const url = state.properties.apiUrl + api.rfc_list.path;
 			fetch(url, {
@@ -473,7 +539,8 @@ createCustomElement('bllt-quady-chg-property-list', {
 				})
 				.then(function (result) {
 					let groups = [...state.groups];
-					groups = groups.concat(result.groups);
+					let apiGroup = result.groups.map(item => {return  {id: item, label: item, type: 'group'}})
+					groups = groups.concat(apiGroup);
 					updateState({
 						groups: groups ,
 					});
@@ -484,7 +551,8 @@ createCustomElement('bllt-quady-chg-property-list', {
 				});
 
 
-		}
+		
 
-	}
+     	}
+}
 });

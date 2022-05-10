@@ -10,7 +10,6 @@ import styles from '../styles.scss';
 import {  api, DEFAULT_BASE_URL, headers } from '../bllt-quady-chg-property-list/constants'
 
 
-
 const initData = ({ state, dispatch }) => {
 	
 	dispatch("LOT_LIST_REQUESTED", {
@@ -25,6 +24,7 @@ const openDialog = (updateState) => {
 
 
 const onSelectLot = (item, state, updateState) => {
+	updateState({open: false});
 	state.properties.updateParentState({ selectedLotId: item.lotId });
 }
 
@@ -35,7 +35,7 @@ const view = (state, { updateState, dispatch }) => {
 		<div>
 			<button
 				on-click={() => openDialog(updateState)}
-				className="input-group-button">
+				className="input-group-button cursor-pointer">
 				<now-icon icon="magnifying-glass-fill" size="md"></now-icon>
 			</button>
 
@@ -135,7 +135,6 @@ createCustomElement('lot-search-modal', {
 
 		},
 		"NOW_MODAL#OPENED_SET": ({ action, state, updateState }) => {
-			console.log("OPENED_SET sma")
 			updateState({ open: action.payload.value });
 		},
 

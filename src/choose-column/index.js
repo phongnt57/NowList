@@ -37,7 +37,7 @@ const onAddItem = (state, updateState) => {
 	if (!currentSelect) return;
 	const index = tempColumns.find(item => item.key === currentSelect);
 	if (!index) {
-		const item = LIST_ALL_COMLUMN.find(item => item.key == currentSelect);
+		const item = state.properties.allColumns.find(item => item.key == currentSelect);
 		tempColumns.push(item);
 		console.log(tempColumns);
 		updateState({ tempColumns: tempColumns });
@@ -58,12 +58,11 @@ const onRemove = (removeItem, state, updateState) =>{
 
 const view = (state, { updateState, dispatch }) => {
 	const properties = state.properties;
-	console.log(properties.selectedColumns.length);
 	return (
 		<div>
 			<now-icon
 				on-click={() => openDialog(updateState)}
-				className="margin-x2" icon="gear-outline" size="lg"></now-icon>
+				className="margin-x2 cusor-pointer" icon="gear-outline" size="lg"></now-icon>
 
 			<now-modal
 				opened={state.open}
@@ -85,7 +84,7 @@ const view = (state, { updateState, dispatch }) => {
 				<div className="dialog-content">
 					<now-card>
 						<div className="scroll">
-							{LIST_ALL_COMLUMN.map(item => (
+							{state.properties.allColumns.map(item => (
 								<div
 									on-click={() => onSelect(item, updateState, state)}
 									className={`item-content cusor-pointer ${state.currentSelect == item.key ? ' select-background' : null}`}>
@@ -138,8 +137,9 @@ createCustomElement('choose-column', {
 
 	},
 	properties: {
+		allColumns :{default: LIST_ALL_COMLUMN}, 
 		selectedColumns: { default: [] },
-		submitColumn: { default: null }
+		submitColumn: { default: null } // function
 	},
 	actionHandlers: {
 

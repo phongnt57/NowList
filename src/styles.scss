@@ -1,10 +1,13 @@
 @import '@servicenow/sass-kit/host';
 
+
+
 .sn-list-header {
     display: flex;
-    padding: calc(var(--now-scale-space--lg, 1)*1rem);
     width: 100%;
     justify-content: space-between;
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
 }
 
 .container {
@@ -118,6 +121,8 @@ input[type=text], select{
   
   .now-heading {
       margin-right: 20px;
+      padding-top: 20px;
+      padding-bottom: 20px;
   }
   .bottom-paging {
       margin-top: 10px;
@@ -177,5 +182,8 @@ input[type=text], select{
 
 .d-flex {
     display: flex;
+}
+.cursor-pointer {
+    cursor: pointer;
 }
 
