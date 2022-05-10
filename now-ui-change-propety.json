@@ -1,14 +1,13 @@
 {
 	"components": {
-	    "bllt-quady-chg-property-list": {
+	    "bllt-quady-list-component": {
 	        "innerComponents": [
 				"now-button",
 				"now-icon",
 				"now-popover",
 				"now-card",
 				"now-modal",
-				"now-split-button",
-				"now-tabs"
+				"now-split-button"
 			],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
@@ -27,8 +26,19 @@
 					"fieldType": "string",
 					"defaultValue": "http://18.178.235.108:8089/trinity/api"
 				  }
+			],
+			"actions": [
+				{
+					"description":"Click new",
+					 "label": "On Click New",
+					 "action": "EVENT_QUADY_CREATE_RFC"
+				},
+				{
+					"description":"Click detail",
+					 "label": "On Click Detail",
+					 "action": "EVENT_QUADY_DETAIL_RFC" 
+				}
 			]
-			
 		
 	    }
 	},

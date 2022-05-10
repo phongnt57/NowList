@@ -5,18 +5,19 @@ import '@servicenow/now-button';
 import '@servicenow/now-popover'
 import '@servicenow/now-modal'
 import '@servicenow/now-split-button'
-// import '@servicenow/now-button-stateful'
 import '../choose-column'
-
+import '../lot-search-modal'
 import '@servicenow/now-card'
-import styles from './styles.scss';
-import { LIST_COMLUMN, api, headers } from './constants'
+import '@servicenow/now-tabs'
+import styles from '../styles.scss';
+import { LIST_COMLUMN, api, headers, statusChg, DEFAULT_BASE_URL } from './constants'
 
 const requestSearchResults = ({ state, dispatch }) => {
 	dispatch("SEARCH_RESULTS_REQUESTED", {
 		linesPerPage: state.linesPerPage,
 		selectedPage: 1,
 	});
+	dispatch("GET_LIST_INIT_REQUEST",{});
 };
 
 const clickNext = (state, dispatch) => {
@@ -123,7 +124,7 @@ const view = (state, { updateState, dispatch }) => {
 
 					</now-popover>
 
-					<h2 className="now-heading -header -secondary"> RFC list</h2>
+					<h2 className="now-heading -header -secondary"> Change Property List</h2>
 					<div className="margin-x2">Search</div>
 					<input className="header-input" type="text"
 						ref={searchRef}
@@ -132,7 +133,6 @@ const view = (state, { updateState, dispatch }) => {
 				</div>
 				<div></div>
 				<div className="sn-list-header-title-container">
-					{/* <now-icon className="margin-x2" icon="gear-outline" size="lg"></now-icon> */}
 					<choose-column
 						selectedColumns={state.selectedColumns}
 						submitColumn={updateState}>
@@ -155,6 +155,52 @@ const view = (state, { updateState, dispatch }) => {
 			</div>
 			<div className="sn-last-refreshed">
 				{state.searchKeyword ? `All> Keyword=${state.searchKeyword}` : null}
+			</div>
+
+			<div>
+				<table className="filter-table">
+					<tr>
+						<td>Lot Id</td>
+						<td>
+							<div className="d-flex">
+								<input type="text"
+								 value={state.selectedLotId}
+								 className="input-search"/>
+								<lot-search-modal
+								apiUrl ={DEFAULT_BASE_URL}
+								updateParentState={updateState}
+								></lot-search-modal>
+								{/* <button className="input-group-button">
+								     <now-icon icon="magnifying-glass-fill" size="md"></now-icon>
+								</button> */}
+
+							</div>
+						</td>
+			
+					</tr>
+					<tr>
+						<td>Status</td>
+						<td>
+						<now-tabs 
+						fixed-width={true}
+						 items={statusChg}
+						 selected-item={null} 
+						 size="md"></now-tabs>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Group</td>
+						<td>
+						<now-tabs 
+						 items={state.groups}
+						 selected-item={null} 
+						 size="md"></now-tabs>
+						</td>
+						
+						
+					</tr>
+				</table>
 			</div>
 
 			<div className="container now-grid">
@@ -301,7 +347,7 @@ const onCheckChange = (id, state, updateState) => {
 
 }
 
-createCustomElement('bllt-quady-list-component', {
+createCustomElement('bllt-quady-chg-property-list', {
 	renderer: { type: snabbdom },
 	view,
 	styles,
@@ -314,12 +360,16 @@ createCustomElement('bllt-quady-list-component', {
 		linesPerPage: 5,
 		openModal: false,
 		searchKeyword: '',
+		seletedGroup:'',
+		selectedStatusId: '',
+		selectedLotId: '',
 		selectIds: [],
 		selectedColumns: LIST_COMLUMN,
 		comment: "",
+		groups: [{id: null, label: "All"}]
 	},
 	properties: {
-		apiUrl: { default: "http://18.178.235.108:8089/trinity/api" }
+		apiUrl: { default: DEFAULT_BASE_URL }
 	},
 	actionHandlers: {
 		[actionTypes.COMPONENT_CONNECTED]: requestSearchResults,
@@ -372,6 +422,11 @@ createCustomElement('bllt-quady-list-component', {
 
 		},
 
+		"NOW_TABS#SELECTED_ITEM_SET" : ({action, state, updateState}) =>{
+			console.log(action);
+
+		},
+
 		SEARCH_RESULTS_REQUESTED: ({ action, state, updateState }) => {
 			const payload = action.payload;
 			let body = {
@@ -382,12 +437,12 @@ createCustomElement('bllt-quady-list-component', {
 			};
 			if (payload.searchKeyword) body.searchKeyword = payload.searchKeyword;
 			else if (state.searchKeyword) body.searchKeyword = state.searchKeyword;
-			const url = "https://api.jsonbin.io/b/626e53e6019db46796940c1a";
-			//const url = state.properties.apiUrl + api.rfc_list.path;
+			// const url = "https://api.jsonbin.io/b/626e53e6019db46796940c1a";
+			const url = state.properties.apiUrl + api.rfc_list.path;
 			fetch(url, {
-				method: "get",
+				method: api.rfc_list.method,
 				headers: headers,
-				// body: JSON.stringify(body)
+				body: JSON.stringify(body)
 			})
 				.then(function (response) {
 					return response.json();
@@ -406,6 +461,30 @@ createCustomElement('bllt-quady-list-component', {
 				});
 
 		},
+
+		GET_LIST_INIT_REQUEST: ({action, state, updateState}) => {
+			const url = state.properties.apiUrl + api.init_list.path + "/" + state.selectedLotId;
+			fetch(url, {
+				method: api.init_list.method,
+				headers: headers,
+			})
+				.then(function (response) {
+					return response.json();
+				})
+				.then(function (result) {
+					let groups = [...state.groups];
+					groups = groups.concat(result.groups);
+					updateState({
+						groups: groups ,
+					});
+
+				})
+				.catch(function (error) {
+					console.log('Request failed', error);
+				});
+
+
+		}
 
 	}
 });
