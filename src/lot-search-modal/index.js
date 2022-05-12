@@ -2,9 +2,9 @@ import { createCustomElement, actionTypes } from '@servicenow/ui-core';
 import { snabbdom } from '@servicenow/ui-renderer-snabbdom';
 import '@servicenow/now-icon';
 import '@servicenow/now-button';
-import '@servicenow/now-popover'
-import '@servicenow/now-modal'
-import '@servicenow/now-card'
+import '@servicenow/now-popover';
+import '@servicenow/now-modal';
+import '@servicenow/now-card';
 
 import styles from '../styles.scss';
 import {  api, DEFAULT_BASE_URL, headers } from '../bllt-quady-chg-property-list/constants'
@@ -64,11 +64,8 @@ const view = (state, { updateState, dispatch }) => {
 									</td>
 
 								</tr>
-
 							))
 							: null}
-
-
 					</table>
 
 

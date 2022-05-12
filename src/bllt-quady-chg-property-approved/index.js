@@ -108,6 +108,7 @@ const view = (state, { updateState, dispatch }) => {
 	const checkBoxRef = createRef();
 
 	return (
+		
 		<div>
 			<now-modal
 				opened={state.openModal}
@@ -158,7 +159,7 @@ const view = (state, { updateState, dispatch }) => {
 
 					</now-popover>
 
-					<div className="now-heading -header -secondary"> Change Property Pending List</div>
+					<div className="now-heading -header -secondary"> Change Property Approved List</div>
 					<div className="margin-x2">Search</div>
 					<input className="header-input" type="text"
 						ref={searchRef}
@@ -173,14 +174,14 @@ const view = (state, { updateState, dispatch }) => {
 						submitColumn={updateState}>
 					</choose-column>
 
-					<now-split-button
+					{/* <now-split-button
 						className="margin-x2"
 						label={`Action on select row(${state.selectIds.length})`}
 						items={[{ "id": "approve", "label": "Approve" }]}
 
 						variant="tertiary"
 						size="md" icon=""
-					></now-split-button>
+					></now-split-button> */}
 
 
 				</div>
@@ -317,7 +318,7 @@ const view = (state, { updateState, dispatch }) => {
 														</td>
 													);
 												}
-												if (column.key !== "changeId" && column.key !=="referenceId"  && column.key !=="status")
+												if (column.key !== "changeId" && column.key !=="referenceId" && column.key !=="status")
 													return (
 														<td>
 															<div className="sn-text-link">
@@ -415,7 +416,7 @@ const onCheckChange = (id, state, updateState) => {
 
 }
 
-createCustomElement('bllt-quady-chg-property-pending', {
+createCustomElement('bllt-quady-chg-property-approved', {
 	renderer: { type: snabbdom },
 	view,
 	styles,
@@ -533,9 +534,9 @@ createCustomElement('bllt-quady-chg-property-pending', {
 				"searchKeyword": state.searchKeyword
 			};
 
-			const url = state.properties.apiUrl + api.chg_property_pending_list.path + "/" + state.selectedLotId;
+			const url = state.properties.apiUrl + api.chg_property_approved_list.path + "/" + state.selectedLotId;
 			fetch(url, {
-				method: api.chg_property_pending_list.method,
+				method: api.chg_property_approved_list.method,
 				headers: headers,
 				body: JSON.stringify(body)
 			})

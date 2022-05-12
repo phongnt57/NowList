@@ -1,5 +1,5 @@
 @import '@servicenow/sass-kit/host';
-
+@import './status.scss';
 
 
 .sn-list-header {
@@ -199,4 +199,14 @@ input[type=text], select{
 input[type=checkbox] {
     transform: scale(1.2);
 }
+
+.status-label {
+    display: inline-block;
+    white-space: normal;
+    padding: 5px 8px;
+    width: 100%;
+    font-size: 9px;
+    text-align: center;
+}
+
 
