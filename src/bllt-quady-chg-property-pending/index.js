@@ -12,7 +12,7 @@ import '@servicenow/now-tabs'
 import '@servicenow/now-alert'
 
 import styles from '../styles.scss';
-import { LIST_COMLUMN, LIST_ALL_COMLUMN, api, headers, statusChg, DEFAULT_BASE_URL } from './constants'
+import { LIST_COMLUMN, LIST_ALL_COMLUMN, api, headers, DEFAULT_BASE_URL } from './constants'
 
 const requestSearchResults = ({ state, dispatch }) => {
 	dispatch("SEARCH_RESULTS_REQUESTED", {
@@ -112,16 +112,16 @@ const view = (state, { updateState, dispatch }) => {
 			<now-modal
 				opened={state.openModal}
 				size='sm'
-				header-label='Delete Change Property'
+				header-label='Approve Change Property'
 				footer-actions='[
 					{
-					"variant": "primary-negative",
-					"label": "Submit",
-					"type": "delete" 
+					"variant": "primary",
+					"label": "Aprrove",
+					"type": "approve" 
 					}
 					]'
 			>
-				<div style={{ marginBottom: "10px" }}>Delete {state.selectIds.toString()}</div>
+				<div style={{ marginBottom: "10px" }}> {state.selectIds.toString()}</div>
 
 				<textarea
 					className="border-input"
@@ -130,26 +130,6 @@ const view = (state, { updateState, dispatch }) => {
 
 			</now-modal>
 
-			<now-modal
-				opened={state.openModalCloseChgProperty}
-				size='sm'
-				header-label='Close Change Property'
-				footer-actions='[
-					{
-					"variant": "primary-negative",
-					"label": "Close All",
-					"type": "close" 
-					}
-					]'
-			>
-				<div style={{ marginBottom: "10px" }}>Close {state.selectIds.toString()}</div>
-
-				<textarea
-					className="border-input"
-					style={{ width: "100%" }} rows={5}
-					onblur={(e) => onComment(e.target.value, updateState)}></textarea>
-
-			</now-modal>
 
 
 
@@ -178,7 +158,7 @@ const view = (state, { updateState, dispatch }) => {
 
 					</now-popover>
 
-					<div className="now-heading -header -secondary"> Change Property List</div>
+					<div className="now-heading -header -secondary"> Change Property Pending List</div>
 					<div className="margin-x2">Search</div>
 					<input className="header-input" type="text"
 						ref={searchRef}
@@ -196,15 +176,11 @@ const view = (state, { updateState, dispatch }) => {
 					<now-split-button
 						className="margin-x2"
 						label={`Action on select row(${state.selectIds.length})`}
-						items={[{ "id": "delete", "label": "Delete" }, { "id": "close", "label": "Close" }]}
+						items={[{ "id": "approve", "label": "Approve" }]}
 
 						variant="tertiary"
 						size="md" icon=""
 					></now-split-button>
-
-
-					<now-button onclick={() => dispatch("EVENT_QUADY_CREATE", { 'eventpayload': 'createnew' })}
-						className="margin-x2" label="New" variant="primary" size="md"  ></now-button>
 
 
 				</div>
@@ -244,16 +220,6 @@ const view = (state, { updateState, dispatch }) => {
 							</div>
 						</td>
 
-					</tr>
-					<tr>
-						<td>Status</td>
-						<td>
-							<now-tabs
-								fixed-width={true}
-								items={statusChg}
-								selected-item={''}
-								size="md"></now-tabs>
-						</td>
 					</tr>
 
 					<tr>
@@ -298,46 +264,67 @@ const view = (state, { updateState, dispatch }) => {
 					</thead>
 					<tbody className="table-body">
 						{state.data.length ? (
-							state.data.map(item => (
-								<tr className="row">
-									<td>
-										<div className="sn-grid-checkbox">
-											<input
-												checked={state.selectIds.indexOf(item.changeId) > -1}
-												type="checkbox"
-												onchange={() => onCheckChange(item.changeId, state, updateState)} />
-										</div>
+							state.data.map((item, changeIndex) => {
+								const requests = item.requests;
+								const length = requests.length;
+								const bg = changeIndex % 2 == 0 ? 'event' : 'odd';
+								return requests.map((request, index) => {
+									const isFirst = index == 0;
+									return (
+										<tr className={`row row-${bg}`}>
+											{ isFirst ?
+											<td rowspan={length}>
+												<div className="sn-grid-checkbox">
+													<input
+														checked={state.selectIds.indexOf(item.changeId) > -1}
+														type="checkbox"
+														onchange={() => onCheckChange(item.changeId, state, updateState)} />
+												</div>
 
-									</td>
-									{state.selectedColumns.map(column => {
-										if (column.key == "changeId") {
-											return (
-												<td>
-													<div className="sn-text-link cursor-pointer">
-														<a className="text-link"
-															on-click={() => dispatch("EVENT_QUADY_DETAIL", { 'event-payload': item.changeId })}
-														>{item.changeId}</a>
-													</div>
-												</td>
+											</td>
+											: null
+								            } 
+											{state.selectedColumns.map(column => {
+												if (column.key == "changeId" && isFirst) {
+													return (
+														<td rowspan={length}>
+															<div className="sn-text-link cursor-pointer">
+																<a className="text-link"
+																	on-click={() => dispatch("EVENT_QUADY_DETAIL", { 'event-payload': item.changeId })}
+																>{item.changeId}</a>
+															</div>
+														</td>
+													);
+												} 
+												 if(column.key== "referenceId" && isFirst){
+													return (
+														<td rowspan={length}>
+															<div className="sn-text-link">
+																<div className=""
+																>{item.referenceId}</div>
+															</div>
+														</td>
+													);
+												}
+												if (column.key !== "changeId" && column.key !=="referenceId")
+													return (
+														<td>
+															<div className="sn-text-link">
+																{request[column.key]}
+															</div>
+														</td>
 
+													);
+											})}
 
-											);
-										} else {
-											return (
-												<td>
-													<div className="sn-text-link">
-														{item[column.key]}
-													</div>
-												</td>
+										</tr>
+									)
 
-											);
+								}
+								);
 
-										}
-									})}
-
-
-								</tr>
-							))
+							}
+							)
 						) : null
 
 						}
@@ -417,7 +404,7 @@ const onCheckChange = (id, state, updateState) => {
 
 }
 
-createCustomElement('bllt-quady-chg-property-list', {
+createCustomElement('bllt-quady-chg-property-pending', {
 	renderer: { type: snabbdom },
 	view,
 	styles,
@@ -432,7 +419,6 @@ createCustomElement('bllt-quady-chg-property-list', {
 		openModalCloseChgProperty: false,
 		searchKeyword: '',
 		seletedGroup: '',
-		selectedStatusId: '',
 		selectedLotId: '',
 		selectIds: [],
 		selectedColumns: LIST_COMLUMN,
@@ -452,21 +438,21 @@ createCustomElement('bllt-quady-chg-property-list', {
 			const payload = action.payload;
 			let url = "";
 			let method = "get";
+			const chgproperties = state.data.filter(item => state.selectIds.indexOf(item.changeId) > -1);
+			const requests = chgproperties.reduce((pre,item)=>{return pre.concat(item.requests)},[]);
+			const requestIds = requests.map(item =>item.requestId);
+			console.log(requestIds);
 			const body = {
-				changeIds: state.selectIds,
+				requestIds: requestIds,
 				comment: state.comment
 			}
 			// delete change property
-			if (payload.action.type === "delete") {
-				url = state.properties.apiUrl + api.delete_all.path + "/" + state.selectedLotId;
-				method = api.delete_all.method;
-			} else
-				if (payload.action.type === "close") {
-					url = state.properties.apiUrl + api.close_all.path + "/" + state.selectedLotId;
-					method = api.close_all.method;
-				} else {
-					return;
-				}
+			if (payload.action.type === "approve") {
+				url = state.properties.apiUrl + api.approve_all.path + "/" + state.selectedLotId;
+				method = api.approve_all.method;
+			} else {
+				return;
+			}
 
 
 			fetch(url, {
@@ -508,8 +494,7 @@ createCustomElement('bllt-quady-chg-property-list', {
 
 		"NOW_SPLIT_BUTTON#ITEM_CLICKED": ({ action, state, updateState }) => {
 			const payload = action.payload;
-			if (payload.item.id == "delete" && state.selectIds.length >= 0) updateState({ openModal: true });
-			if (payload.item.id == "close" && state.selectIds.length >= 0) updateState({ openModalCloseChgProperty: true });
+			if (payload.item.id == "approve" && state.selectIds.length > 0) updateState({ openModal: true });
 
 
 		},
@@ -517,7 +502,6 @@ createCustomElement('bllt-quady-chg-property-list', {
 		"NOW_TABS#SELECTED_ITEM_SET": ({ action, state, updateState, dispatch }) => {
 			const item = action.payload.item;
 			const value = action.payload.value;
-			if (item.type == "status") updateState({ selectedStatusId: value });
 			if (item.type == "group") updateState({ selectedGroup: value });
 			dispatch("SEARCH_RESULTS_REQUESTED", {
 				linesPerPage: state.linesPerPage,
@@ -534,15 +518,13 @@ createCustomElement('bllt-quady-chg-property-list', {
 					"linesPerPage": payload.linesPerPage,
 					"selectedPage": payload.selectedPage
 				},
-				"selectedStatusId": state.selectedStatusId,
 				"selectedGroup": state.selectedGroup,
 				"searchKeyword": state.searchKeyword
 			};
 
-			// const url = "https://api.jsonbin.io/b/626e53e6019db46796940c1a";
-			const url = state.properties.apiUrl + api.chg_property_list.path + "/" + state.selectedLotId;
+			const url = state.properties.apiUrl + api.chg_property_pending_list.path + "/" + state.selectedLotId;
 			fetch(url, {
-				method: api.chg_property_list.method,
+				method: api.chg_property_pending_list.method,
 				headers: headers,
 				body: JSON.stringify(body)
 			})

@@ -1,6 +1,6 @@
 {
 	"components": {
-	    "bllt-quady-chg-property-list": {
+	    "bllt-quady-chg-property-pending": {
 	        "innerComponents": [
 				"now-button",
 				"now-icon",
@@ -13,7 +13,7 @@
 			],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
-				"label": "Change Property List",
+				"label": "Change Property Pending",
 				"icon": "document-outline",
 				"description": "A description of my component",
 				"category": "primitives"
@@ -33,5 +33,5 @@
 		
 	    }
 	},
-	"scopeName": "x_bllt_bllt_chng_0"
+	"scopeName": "x_bllt_bllt_chng_pending_0"
 }

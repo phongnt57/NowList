@@ -26,6 +26,7 @@
     table-layout: auto;
     width: 100%;
 }
+.content-table {padding-left: 10px;}
 .now-grid th {
     background: RGB(var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255)));
     border-width: initial;
@@ -39,7 +40,7 @@
     white-space: nowrap;
     z-index: 1;
     border-color: RGB(var(--now-color_border--secondary,var(--now-color--neutral-5,172,180,181)));
-    vertical-align: bottom;
+    // vertical-align: bottom;
 }
 .now-grid th .sn-text-link {
     padding-top: calc(var(--now-scale-space--sm, 1)*0.5rem);
@@ -79,13 +80,19 @@
     padding-bottom: calc(var(--now-scale-space--xs, 1)*0.25rem);
     outline: none;
 }
-.now-grid tr:nth-child(2n+1) {
-    background: RGB(var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255)));
-}
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
   }
+.now-grid .row-odd {
+    background-color: #f2f2f2 !important; 
+}
+
+.now-grid  .row-event {
+    background-color: white !important; 
+}
+
+
 .now-grid .sn-text-link {
     padding-top: calc(var(--now-scale-space--sm, 1)*0.5rem);
     padding-bottom: calc(var(--now-scale-space--sm, 1)*0.5rem);
@@ -169,7 +176,7 @@ input[type=text], select{
 }
 
 .filter-table {
-    margin-left: 20px;
+    margin-left: 25px;
     min-width: 600px;
     tr {
         background-color: transparent;
@@ -185,5 +192,11 @@ input[type=text], select{
 }
 .cursor-pointer {
     cursor: pointer;
+}
+.w-100 { width: 100% ;}
+.padding-10 { padding: 10px}
+
+input[type=checkbox] {
+    transform: scale(1.2);
 }
 

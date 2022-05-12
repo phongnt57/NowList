@@ -25,7 +25,7 @@ const openDialog = (updateState) => {
 
 const onSelectLot = (item, state, updateState) => {
 	updateState({open: false});
-	state.properties.updateParentState({ selectedLotId: item.lotId });
+	state.properties.dispatch("LOT_MODAL_SELECT_ITEM", { selectedLotId: item.lotId });
 }
 
 
@@ -53,13 +53,13 @@ const view = (state, { updateState, dispatch }) => {
              ]'
 			>
 				<div className="dialog-content">
-					<table>
+					<table className="w-100">
 						{state.data.length > 0 ?
 							state.data.map(item => (
-								<tr className="cursor-pointer"
+								<tr className="cursor-pointer "
 									onclick={() => onSelectLot(item, state, updateState)}>
-									<td>
-										{item.lotId}
+									<td className="padding-10 text-link">
+										{`${item.lotId}(${item.lotName})`}
 
 									</td>
 
@@ -92,7 +92,7 @@ createCustomElement('lot-search-modal', {
 
 	},
 	properties: {
-		updateParentState: { default: null },
+		dispatch: { default: null },
 		apiUrl: { default: DEFAULT_BASE_URL }
 
 	},
@@ -102,20 +102,23 @@ createCustomElement('lot-search-modal', {
 
 		LOT_LIST_REQUESTED: ({ action, state, updateState }) => {
 
-			
-			const url = state.properties.apiUrl + api.rfc_list.path;
+			const body = {
+				selectedInProgress: true,
+				selectedClosed: true
+			}
+			const url = state.properties.apiUrl + api.lot_list.path;
 			console.log(url)
 			fetch(url, {
 				method: api.lot_list.method,
 				headers: headers,
+				body : JSON.stringify(body)
 			})
 				.then(function (response) {
 					return response.json();
 				})
 				.then(function (result) {
-					console.log(result)
 					updateState({
-						data: result.results,
+						data: result,
 					});
 
 				})

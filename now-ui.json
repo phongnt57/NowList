@@ -8,7 +8,8 @@
 				"now-card",
 				"now-modal",
 				"now-split-button",
-				"now-tabs"
+				"now-tabs",
+				"now-alert"
 			],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],

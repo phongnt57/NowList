@@ -6,24 +6,22 @@ export const LIST_COMLUMN = [
 	{
 		"key": "referenceId","label": "Reference Id"
 	},
+
 	{
-		"key": "referenceCategory","label": "Reference Category"
+		"key": "requestId", "label": "Request ID"
 	},
-	{
-		"key": "summary","label": "Summary"
-	},
+
 	{
 		"key": "submitter","label": "Submitter"
 	},
+
 	{
 		"key": "assignee","label": "Assignee"
 	},
 	{
-		"key": "createdTime","label": "Created Time"
+		"key": "requestTime", "label" :"requestTime"
 	},
-	{
-		"key": "updatedTime","label": "Updated Time"
-	},
+
 	{
 		"key": "status","label": "Status"
 	},
@@ -38,46 +36,43 @@ export const LIST_ALL_COMLUMN = [
 	{
 		"key": "referenceId","label": "Reference Id"
 	},
+
 	{
-		"key": "referenceCategory","label": "Reference Category"
+		"key": "requestId", "label": "Request ID"
 	},
-	{
-		"key": "summary","label": "Summary"
-	},
+
 	{
 		"key": "submitter","label": "Submitter"
 	},
+
 	{
 		"key": "assignee","label": "Assignee"
 	},
 	{
-		"key": "createdTime","label": "Created Time"
+		"key": "requestTime", "label" :"requestTime"
 	},
-	{
-		"key": "updatedTime","label": "Updated Time"
-	},
+
 	{
 		"key": "status","label": "Status"
 	},
+	{
+		"key": "enableApproval" , "label": "Enable Approval"
+    },
+
+	{
+		"key": "reviewed" , "label": "Reviewed"
+    }
 	
 ]; 
 export const api = {
-	chg_property_list : {
-		path: "/chgproperty/list",
+	chg_property_pending_list : {
+		path: "/chgproperty/pending/list",
 		method: 'put'
 	},
-	delete_all : {
-		path: "/chgproperty/removeAll",
+	approve_all : {
+		path: "/chgproperty/pending/approveAll",
 		method: 'put'
 
-	},
-	close_all : {
-		path: "/chgproperty/closeAll",
-		method: 'put'
-	},
-	lot_list : {
-		path: "/lot/lots",
-		method: "post"
 	},
 	init_list : {
 		path: "/chgproperty/list/Init",
