@@ -1,26 +1,19 @@
 
 export const api = {
-	chg_property_list : {
+	chg_property_pending_detail : {
 		path: "/chgproperty/pending/details",
 		method: 'get'
 	},
-	delete_all : {
-		path: "/chgproperty/removeAll",
+	approve : {
+		path: "/chgproperty/pending/approve",
 		method: 'put'
 
 	},
-	close_all : {
-		path: "/chgproperty/closeAll",
+	return_to_submitter : {
+		path: "/chgproperty/pending/returnToSubmitter",
 		method: 'put'
 	},
-	lot_list : {
-		path: "/lot/lots",
-		method: "post"
-	},
-	init_list : {
-		path: "/chgproperty/list/Init",
-		method: 'get'
-	}
+	
 	
 };
 export const headers =  {
