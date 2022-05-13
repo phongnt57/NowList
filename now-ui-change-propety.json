@@ -1,7 +1,7 @@
 {
 	"components": {
-	    "bllt-quady-chg-property-list": {
-	        "innerComponents": [
+		"bllt-quady-chg-property-list": {
+			"innerComponents": [
 				"now-button",
 				"now-icon",
 				"now-popover",
@@ -12,13 +12,15 @@
 				"now-alert"
 			],
 			"uiBuilder": {
-				"associatedTypes": ["global.core", "global.landing-page"],
+				"associatedTypes": [
+					"global.core",
+					"global.landing-page"
+				],
 				"label": "Change Property List",
 				"icon": "document-outline",
 				"description": "A description of my component",
 				"category": "primitives"
 			},
-			
 			"properties": [
 				{
 					"name": "apiUrl",
@@ -26,12 +28,23 @@
 					"description": "Ar",
 					"readOnly": false,
 					"fieldType": "string",
-					"defaultValue": "http://18.178.235.108:8089/trinity/api"
-				  }
-			]
+					"defaultValue": "https://jenkins.quady-cloud.com/trinity/api/sn"
+				}
+			],
 			
-		
-	    }
+			"actions": [
+				{
+					"description":"Click new",
+					 "label": "On Click New",
+					 "action": "EVENT_QUADY_CREATE"
+				},
+				{
+					"description":"Click detail",
+					 "label": "On Click Detail",
+					 "action": "EVENT_QUADY_DETAIL" 
+				}
+			]
+		}
 	},
 	"scopeName": "x_bllt_bllt_chng_0"
 }

@@ -88,7 +88,7 @@ export const api = {
 export const headers =  {
 	'Accept': 'application/json, text/plain, */*',
 	'Content-Type': 'application/json',
-	'Authorization': 'RyEuBNoMKNpvZozFQcRhsic6Sbb760yVliYqixM5VhFPd3uDKA'
+	'Authorization': 'RyEuBNoMKNpvZozFQcRhsic6Sbb760yVliYqixM5VhFPd3uDKA',
 }
 
 export const statusChg = [
