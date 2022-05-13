@@ -203,7 +203,7 @@ const view = (state, { updateState, dispatch }) => {
 					></now-split-button>
 
 
-					<now-button onclick={() => dispatch("EVENT_QUADY_CREATE", { 'eventpayload': 'createnew' })}
+					<now-button onclick={() => dispatch("EVENT_QUADY_CREATE", { 'create': state.selectedLotId })}
 						className="margin-x2" label="New" variant="primary" size="md"  ></now-button>
 
 
@@ -315,7 +315,7 @@ const view = (state, { updateState, dispatch }) => {
 												<td>
 													<div className="sn-text-link cursor-pointer">
 														<a className="text-link"
-															on-click={() => dispatch("EVENT_QUADY_DETAIL", { 'event-payload': item.changeId })}
+															on-click={() => dispatch("EVENT_QUADY_DETAIL", { 'detail': item.changeId })}
 														>{item.changeId}</a>
 													</div>
 												</td>

@@ -290,7 +290,7 @@ const view = (state, { updateState, dispatch }) => {
 														<td rowspan={length}>
 															<div className="sn-text-link cursor-pointer">
 																<a className="text-link"
-																	on-click={() => dispatch("EVENT_QUADY_DETAIL", { 'eventPayload': item.changeId })}
+																	on-click={() => dispatch("EVENT_QUADY_DETAIL", { 'detail': item.changeId })}
 																>{item.changeId}</a>
 															</div>
 														</td>
