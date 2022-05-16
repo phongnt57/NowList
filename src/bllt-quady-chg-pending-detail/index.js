@@ -35,44 +35,14 @@ const onSearchKeyword = (searchRef, e, dispatch, state, updateState) => {
 
 }
 
-const onEnterLot = (lotRef, e, dispatch, state, updateState) => {
-	if (e.which == 13) {
-		const value = lotRef.current.value;
-		updateState({ selectedLotId: value });
-		dispatch("SEARCH_RESULTS_REQUESTED", {
-			linesPerPage: state.linesPerPage,
-			selectedPage: 1,
-			selectedLotId: value
-		});
-
-		dispatch("GET_LIST_INIT_REQUEST", {});
-
-
-	}
-
-}
-
 
 const onComment = (comment, updateState) => {
 	updateState({ comment: comment });
 
 }
 
-const onCheckChangeAll = (ref, state, updateState) => {
-	if (ref.current.checked) {
-		let seletedIds = state.data.map(item => item.changeId);
-		updateState({ selectIds: seletedIds });
-	} else updateState({ selectIds: [] });
-
-}
-
-
 
 const view = (state, { updateState, dispatch }) => {
-	const searchRef = createRef();
-	const lotRef = createRef();
-	const checkBoxRef = createRef();
-
 	return (
 		<div>
 			<now-modal
@@ -99,7 +69,7 @@ const view = (state, { updateState, dispatch }) => {
 			<now-modal
 				opened={state.openModalReject}
 				size='sm'
-				header-label='Return to Submitter '
+				header-label='Return to Submitter'
 				footer-actions='[
 					{
 					"variant": "primary",
@@ -108,7 +78,7 @@ const view = (state, { updateState, dispatch }) => {
 					}
 					]'
 			>
-				<div style={{ marginBottom: "10px" }}>Return to Submitter this Request?</div>
+				<div style={{ marginBottom: "10px" }}>Return to Submitter this request?</div>
 
 				<textarea
 					className="border-input"
@@ -121,12 +91,13 @@ const view = (state, { updateState, dispatch }) => {
 
 			<div className="sn-list-header">
 				<div className="sn-list-header-title-container">
-					<now-button style={{ marginLeft: "10px" }}
+					<now-button
+						on-click={() => history.back()}
 						className="cursor-pointer margin-x2"
 						icon="chevron-left-fill" size="md" />
 					<now-popover interaction-type="dialog" positions={[{ "target": "bottom-center", "content": "top-center" }]}
 					>
-						<now-button style={{ marginLeft: "10px" }}
+						<now-button
 							className="cursor-pointer margin-x2" slot="trigger"
 							icon="menu-fill" size="md" />
 						<now-card slot="content">
@@ -134,10 +105,10 @@ const view = (state, { updateState, dispatch }) => {
 
 					</now-popover>
 
-					<div className="now-heading -header -secondary">
+					<h4 className="now-heading -header -secondary">
 						<div>Change Property Pending Approval Details</div>
-						<div> LOT-001</div>
-					</div>
+						<div> {state.data.lotName}</div>
+					</h4>
 
 				</div>
 				<div></div>
@@ -146,11 +117,10 @@ const view = (state, { updateState, dispatch }) => {
 					<now-button onclick={() => dispatch("BUTTON_MENU#ACTION_CLICKED", { 'type': 'approve' })}
 						className="margin-x2" label="Approve" variant="primary" size="md"  ></now-button>
 
-					<now-button onclick={() => dispatch("EVENT_QUADY_CREATE", { 'type': 'reject' })}
+					<now-button onclick={() => dispatch("BUTTON_MENU#ACTION_CLICKED", { 'type': 'reject' })}
 						className="margin-x2" label="Reject" variant="secondary" size="md"  ></now-button>
 				</div>
 			</div>
-		
 
 			{state.alert &&
 				<div>
@@ -163,89 +133,261 @@ const view = (state, { updateState, dispatch }) => {
 				</div>
 			}
 
-			<div>
-				<table className="filter-table">
-				</table>
+
+			<div className="form-group">
+				<div className="margin-top-10 container now-grid">
+					<h3 className="separate-line">Change Property Information</h3>
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="short_description"
+								dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span mandatory="true" oclass="" className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Change Id</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+							<input
+								id="short_description" name="incident.short_description" autoComplete="off"
+								value={state.data.changeId} aria-required="true" className="form-control max-width-50" disabled
+								aria-label="Short description" />
+						</div>
+					</div>
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="short_description"
+								dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span mandatory="true" oclass="" className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Status</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+							<input
+								id="short_description" name="incident.short_description" autoComplete="off"
+								value={state.data.status} aria-required="true" className="form-control max-width-50" disabled
+								aria-label="Short description" />
+						</div>
+					</div>
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="short_description"
+								dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span mandatory="true" oclass="" className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Reference ID</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+							<input
+								id="short_description" name="incident.short_description" autoComplete="off"
+								value={state.data.referenceId} aria-required="true" className="form-control" disabled
+								aria-label="Short description" />
+						</div>
+					</div>
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="incident.short_description" dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Reference Category</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+							<input
+								id="short_description" name="incident.short_description" autoComplete="off"
+								value={state.data.referenceCategory} aria-required="true" className="form-control" disabled
+							/>
+						</div>
+					</div>
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="incident.short_description" dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Summary</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+							<textarea rows="2" id="summary" name="summary" autoComplete="off" aria-required="true"
+								className="form-control" required value={state.data.summary} disabled
+							/>
+						</div>
+					</div>
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="contents" dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Contents</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+							<textarea rows="2" id="contents" name="contents" autoComplete="off"
+								aria-required="true" className="form-control" required="true"
+								aria-label="Short description" value={state.data.contents} disabled
+							/>
+						</div>
+					</div>
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="url" dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Submitter</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+
+							<input
+								className="form-control max-width-50"
+								name="submitter" autoComplete="off"
+								value={state.data.submitter} aria-required="true" disabled
+							/>
+						</div>
+					</div>
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="incident.short_description" dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Assignee</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+							<input
+								className="form-control max-width-50"
+								name="submitter" autoComplete="off"
+								value={state.data.assignee} aria-required="true" disabled
+							/>
+						</div>
+					</div>
+
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="incident.short_description" dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Created Time</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+							<input
+								className="form-control max-width-50"
+								name="submitter" autoComplete="off"
+								value={state.data.createdTime} aria-required="true" disabled
+							/>
+						</div>
+					</div>
+
+					<div className="sn-main-content">
+						<div>
+							<label htmlFor="incident.short_description" dir="ltr" className="col-xs-12 col-md-1_5 col-lg-2 control-label">
+								<span className="required-marker label_description" />
+								<span title="" className="label-text" data-html="false" >Updated Time</span>
+							</label>
+						</div>
+						<div className="col-xs-10 col-md-9 col-lg-8 form-field input_controls">
+							<input
+								className="form-control max-width-50"
+								name="submitter" autoComplete="off"
+								value={state.data.updatedTime} aria-required="true" disabled
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div className="container now-grid">
+					<h3 className="separate-line">	Pending Approval Selection</h3>
+					<div className="child-table">
+						<table className="auto content-table" role="grid">
+							<thead>
+								<tr>
+									<th className="-checkbox">
+										<input
+										    disabled
+											type="checkbox"
+											checked={true} />
+									</th>
+									<th>Request ID</th>
+									<th>Subject</th>
+									<th>Request Time</th>
+									<th>Submitter</th>
+									<th>Group</th>
+									<th>Status</th>
+								</tr>
+
+							</thead>
+							<tbody className="table-body">
+								{state.pendingRequests.map(item => (
+									<tr>
+										<td>
+										<input
+										    disabled
+											type="checkbox"
+											checked={true} />
+										</td>
+										<td>{item.requestId}</td>
+										<td>{item.subject}</td>
+										<td>{item.requestTime}</td>
+										<td>{item.submitter}</td>
+										<td>{item.group}</td>
+										<td>
+											<div className={`status-label amStatus${item.statusId}`}>{item.status}</div>
+										</td>
+
+
+									</tr>
+								))}
+
+
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+
+
+				<div className="container now-grid">
+					<h3 className="separate-line">	 Approved Selection</h3>
+					<div className="child-table">
+						<table className="auto content-table" role="grid">
+							<thead>
+								<tr>
+									<th>Request ID</th>
+									<th>Subject</th>
+									<th>Request Time</th>
+									<th>Submitter</th>
+									<th>Group</th>
+									<th>Status</th>
+								</tr>
+
+							</thead>
+							<tbody className="table-body">
+								{state.approvedRequests.map(item => (
+									<tr>
+										<td>{item.requestId}</td>
+										<td>{item.subject}</td>
+										<td>{item.requestTime}</td>
+										<td>{item.submitter}</td>
+										<td>{item.group}</td>
+										<td>
+											<div className={`status-label amStatus${item.statusId}`}>{item.status}</div>
+										</td>
+
+
+									</tr>
+								))}
+
+
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+
+				<div className="bottom-menu">
+
+					<now-button onclick={() => dispatch("BUTTON_MENU#ACTION_CLICKED", { 'type': 'approve' })}
+						className="" label="Approve" variant="primary" size="md"  ></now-button>
+
+					<now-button onclick={() => dispatch("BUTTON_MENU#ACTION_CLICKED", { 'type': 'reject' })}
+						className="margin-x2" label="Reject" variant="secondary" size="md"  ></now-button>
+				</div>
+
 			</div>
-			<div>
-				Pending Approval Selection
-			</div>
 
-			<div className="container now-grid">
-				<table className="auto content-table" role="grid">
-					<thead>
-						<tr>
-							<th>Request ID</th>
-							<th>Subject</th>
-							<th>Request Time</th>
-							<th>Submitter</th>
-							<th>Group</th>
-							<th>Status</th>
-						</tr>
-
-					</thead>
-					<tbody className="table-body">
-						{data.pendingRequests.map(item=>(
-							<tr>
-								<td>{item.requestId}</td>
-								<td>{item.subject}</td>
-								<td>{item.requestTime}</td>
-								<td>{item.submitter}</td>
-								<td>{item.group}</td>
-								<td>
-									<div className={`status-label amStatus${item.statusId}`}>{item.status}</div>
-									</td>
-
-
-							</tr>
-						))}
-						
-
-					</tbody>
-				</table>
-			</div>
-
-
-			<div>
-				 Approval Request
-			</div>
-
-			<div className="container now-grid">
-				<table className="auto content-table" role="grid">
-					<thead>
-						<tr>
-							<th>Request ID</th>
-							<th>Subject</th>
-							<th>Request Time</th>
-							<th>Submitter</th>
-							<th>Group</th>
-							<th>Status</th>
-						</tr>
-
-					</thead>
-					<tbody className="table-body">
-						{data.approvedRequests.map(item=>(
-							<tr>
-								<td>{item.requestId}</td>
-								<td>{item.subject}</td>
-								<td>{item.requestTime}</td>
-								<td>{item.submitter}</td>
-								<td>{item.group}</td>
-								<td>
-									<div className={`status-label amStatus${item.statusId}`}>{item.status}</div>
-									</td>
-
-
-							</tr>
-						))}
-						
-
-					</tbody>
-
-				</table>
-
-			</div>
-			
 		</div>
 	);
 };
@@ -270,7 +412,7 @@ createCustomElement('bllt-quady-chg-pending-detail', {
 	},
 	properties: {
 		apiUrl: { default: DEFAULT_BASE_URL },
-		pjtId: { default: "PJT-2204050001" }
+		pjtId: { default: "PJT-2205120003" }
 
 	},
 	actionHandlers: {
@@ -281,17 +423,18 @@ createCustomElement('bllt-quady-chg-pending-detail', {
 			const payload = action.payload;
 			let url = "";
 			let method = "get";
+			let requestIds = state.pendingRequests.map(item => item.requestId);
 			const body = {
-				changeIds: state.selectIds,
+				requestIds: requestIds,
 				comment: state.comment
 			}
 			// apporve change property
 			if (payload.action.type === "approve") {
-				url = state.properties.apiUrl + api.approve.path + "/" + state.selectedLotId;
+				url = state.properties.apiUrl + api.approve.path + "/" + state.data.lotId;
 				method = api.approve.method;
 			} else
 				if (payload.action.type === "reject") {
-					url = state.properties.apiUrl + api.return_to_submitter.path + "/" + state.selectedLotId;
+					url = state.properties.apiUrl + api.return_to_submitter.path + "/" + state.data.lotId;
 					method = api.return_to_submitter.method;
 				} else {
 					return;
@@ -313,8 +456,8 @@ createCustomElement('bllt-quady-chg-pending-detail', {
 						dispatch("SHOW_NOW_ALERT", { status: "warning", errorMessage: result.messages.toString() });
 						return;
 					}
-					history.back();
 					dispatch("SHOW_NOW_ALERT", { status: "info" });
+					dispatch("EVENT_QUADY_BACK_TO_LIST", {})
 
 
 				})
@@ -329,7 +472,7 @@ createCustomElement('bllt-quady-chg-pending-detail', {
 
 		},
 		"NOW_MODAL#OPENED_SET": ({ action, state, updateState }) => {
-			updateState({ openModal: action.payload.value, openModalCloseChgProperty: action.payload.value, comment: "" });
+			updateState({ openModal: action.payload.value, openModalReject: action.payload.value, comment: "" });
 		},
 
 		"BUTTON_MENU#ACTION_CLICKED": ({ action, state, updateState }) => {
@@ -379,15 +522,7 @@ createCustomElement('bllt-quady-chg-pending-detail', {
 				updateState({ alert: null });
 			}, 10000);
 		},
-		// LOT_MODAL_SELECT_ITEM: ({ action, state, updateState, dispatch }) => {
-		// 	updateState({ selectedLotId: action.payload.selectedLotId });
-		// 	dispatch("SEARCH_RESULTS_REQUESTED", {
-		// 		linesPerPage: state.linesPerPage,
-		// 		selectedPage: 1,
-		// 	});
-		// 	dispatch("GET_LIST_INIT_REQUEST", {});
 
-		// }
 
 	}
 });

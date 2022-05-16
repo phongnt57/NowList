@@ -158,7 +158,7 @@ const view = (state, { updateState, dispatch }) => {
 
 					</now-popover>
 
-					<div className="now-heading -header -secondary"> Change Property Pending List</div>
+					<h4 className="now-heading -header -secondary"> Change Property Pending List</h4>
 					<div className="margin-x2">Search</div>
 					<input className="header-input" type="text"
 						ref={searchRef}
