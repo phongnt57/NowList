@@ -75,7 +75,7 @@ const view = (state, {updateState}) => {
 								 positions={[{"target": "bottom-center", "content": "top-center"}]}>
 						<now-button slot="trigger" icon="menu-fill" size="md"/>
 					</now-popover>
-					<h2 className="now-heading -header -secondary"> RFC Create</h2>
+					<h4 className="now-heading -header -secondary"> RFC Create</h4>
 				</div>
 				<div className="sn-list-header-title-container">
 					<now-button disabled={!state.subject || !state.summary || !state.contents} className="margin-x2" label="Submit" variant="primary" size="md" onclick={() => openPopup(updateState)}/>
@@ -144,7 +144,7 @@ const view = (state, {updateState}) => {
 					</div>
 				</div>
 			</div>
-			<div className="sn-list-header">
+			<div>
 				<now-button disabled={!state.subject || !state.summary || !state.contents} className="margin-x2" label="Submit" variant="primary" size="md"/>
 			</div>
 		</div>
@@ -165,7 +165,7 @@ createCustomElement('bllt-rfc-create', {
 
 	},
 	actionHandlers: {
-		"NOW_MODAL#FOOTER_ACTION_CLICKED" : ({ action, state, updateState }) => {
+		"NOW_MODAL#FOOTER_ACTION_CLICKED" : ({ action, state, updateState, dispatch }) => {
 			const API = "https://jenkins.quady-cloud.com/trinity/api/sn/rfc/create";
 			let data = {
 				subject: state.subject,
@@ -178,8 +178,7 @@ createCustomElement('bllt-rfc-create', {
 				headers: {
 					'Accept': 'application/json, text/plain, */*',
 					'Content-Type': 'application/json',
-					'Authorization': 'RyEuBNoMKNpvZozFQcRhsic6Sbb760yVliYqixM5VhFPd3uDKA',
-					'Access-Control-Allow-Origin': 'http://localhost:8081'
+					'Authorization': 'RyEuBNoMKNpvZozFQcRhsic6Sbb760yVliYqixM5VhFPd3uDKA'
 				},
 				body: JSON.stringify(data)
 			})
@@ -188,7 +187,7 @@ createCustomElement('bllt-rfc-create', {
 					return response.json();
 				})
 				.then(function (result) {
-
+					dispatch("EVENT_QUADY_BACK_TO_LIST", { });
 				})
 				.catch(function (error) {
 					updateState({openModal: false});
