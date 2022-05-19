@@ -6,7 +6,6 @@ import '@servicenow/now-button';
 import '@servicenow/now-popover';
 import '@servicenow/now-modal';
 import '@servicenow/now-card';
-import '@servicenow/now-input';
 import { LIST_RFC_COLUMN, api, headers } from './constants'
 
 const initChangeProperty = ({ state, dispatch }) => {
