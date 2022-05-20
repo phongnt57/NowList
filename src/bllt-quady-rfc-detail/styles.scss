@@ -9,6 +9,7 @@
   background-color: RGB(var(--now-color_surface--neutral-3,232,234,237));
   border-color: RGBA(var(--now-color_divider--tertiary,var(--now-color--neutral-3,211,214,220)),.2);
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -169,7 +170,7 @@ input[type=text], select{
 }
 
 .form-group .col-xs-10.col-md-9.form-field {
-  width: 70.83333%;
+  width: 40%;
 }
 
 //.form-group {
@@ -219,7 +220,7 @@ img, img a, input, select, button, input.text, input.button {
 
 .sn-main-content {
   display: flow-root;
-  padding: calc(var(--now-scale-space--lg, 1)*1rem);
+  padding: 5px;
   justify-content: flex-end;
 }
 
@@ -232,4 +233,40 @@ img, img a, input, select, button, input.text, input.button {
   border-color: RGB(var(--now-button--primary--border-color,var(--now-color--primary-3,15,67,55)));
   color: RGB(var(--now-button--primary--color,var(--now-color--neutral-0,255,255,255)));
   background-color: RGB(var(--now-button--primary--background-color,var(--now-color--primary-1,30,133,109)));
+}
+
+.select-type {
+  max-width: 50% !important;
+}
+
+.change-property-info {
+  margin-top:  10px;
+}
+
+.separate-line {
+  border-bottom: solid black 1px;
+  max-width: 90%;
+  margin-bottom: 20px;
+  margin-left: 40px;
+}
+
+.submit-button {
+  margin-left: 40px;
+}
+
+.rfc-table {
+  max-width: 90%;
+  margin-left: 40px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+input:disabled {
+  background-color: #cccccc;
+}
+
+.text-danger {
+  color: red;
+  margin-left: 40px;
+  margin-top: 20px;
 }
