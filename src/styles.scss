@@ -114,6 +114,7 @@ tr:nth-child(even) {
     margin-right: 5px;
 
 }
+.margin-left-10 { margin-left: 10px;}
 
 input[type=text], select{
 
@@ -302,6 +303,13 @@ input[type=checkbox] {
 
 input:disabled, textarea:disabled {
     background-color: rgb(204, 204, 204);
+}
+
+.bottom-paging {
+    input:disabled {
+        background-color: white;
+    }
+
 }
 .max-width-50 {max-width: 50% !important;}
   

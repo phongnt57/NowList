@@ -46,7 +46,7 @@ const view = (state, { updateState, dispatch }) => {
 
 					</now-popover>
 
-					<div className="now-heading -header -secondary"> Lot List</div>
+					<h4 className="now-heading -header -secondary"> Lot List</h4>
 				</div>
 				<div></div>
 				<div className="sn-list-header-title-container">

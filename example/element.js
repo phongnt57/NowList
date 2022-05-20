@@ -23,13 +23,13 @@ document.body.appendChild(el);
 // el.innerHTML = `		
 // <bllt-quady-chg-property-pending></bllt-quady-chg-property-pending>
 // `;
-// el.innerHTML = `		
-// <bllt-quady-chg-property-approved></bllt-quady-chg-property-approved>
-// `;
-
 el.innerHTML = `		
-<bllt-quady-lot-list></bllt-quady-lot-list>
+<bllt-quady-chg-property-approved></bllt-quady-chg-property-approved>
 `;
+
+// el.innerHTML = `		
+// <bllt-quady-lot-list></bllt-quady-lot-list>
+// `;
 
 // el.innerHTML = `		
 // <bllt-quady-chg-pending-detail></bllt-quady-chg-pending-detail>

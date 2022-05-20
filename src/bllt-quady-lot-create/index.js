@@ -134,7 +134,7 @@ const isDisable = (state) => {
 
 }
 
-const view = (state, { updateState }) => {
+const view = (state, { updateState, dispatch }) => {
 	const disableSave = isDisable(state);
 	return (
 		<div>
@@ -153,7 +153,9 @@ const view = (state, { updateState }) => {
 			</now-modal>
 			<div className="sn-list-header">
 				<div className="sn-list-header-title-container">
-					<now-button slot="trigger" icon="chevron-left-fill" size="md" />
+					<now-button 
+						on-click={() =>dispatch("EVENT_QUADY_BACK_TO_LIST", {})}
+						className="margin-left-10" slot="trigger" icon="chevron-left-fill" size="md" />
 					<now-popover interaction-type="dialog" className="popover-left"
 						positions={[{ "target": "bottom-center", "content": "top-center" }]}>
 						<now-button slot="trigger" icon="menu-fill" size="md" className="margin-x2" />

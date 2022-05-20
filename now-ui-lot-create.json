@@ -1,7 +1,7 @@
 {
 	"components": {
-		"bllt-quady-chg-property-list": {
-			"innerComponents": [
+	    "bllt-quady-lot-create": {
+	        "innerComponents": [
 				"now-button",
 				"now-icon",
 				"now-popover",
@@ -12,15 +12,13 @@
 				"now-alert"
 			],
 			"uiBuilder": {
-				"associatedTypes": [
-					"global.core",
-					"global.landing-page"
-				],
-				"label": "Change Property List",
+				"associatedTypes": ["global.core", "global.landing-page"],
+				"label": "Lot Create",
 				"icon": "document-outline",
 				"description": "A description of my component",
 				"category": "primitives"
 			},
+			
 			"properties": [
 				{
 					"name": "apiUrl",
@@ -29,22 +27,19 @@
 					"readOnly": false,
 					"fieldType": "string",
 					"defaultValue": "https://jenkins.quady-cloud.com/trinity/api/sn"
-				}
+				  }
+				 
 			],
-			
 			"actions": [
 				{
-					"description":"Click new",
-					 "label": "On Click New",
-					 "action": "EVENT_QUADY_CREATE"
-				},
-				{
-					"description":"Click detail",
-					 "label": "On Click Detail",
-					 "action": "EVENT_QUADY_DETAIL" 
+					"description":"Back",
+					 "label": "On Click to Back To List",
+					 "action": "EVENT_QUADY_BACK_TO_LIST" 
 				}
 			]
-		}
+			
+		
+	    }
 	},
-	"scopeName": "x_bllt_chng_10"
+	"scopeName": "x_bllt_lot_c_10"
 }

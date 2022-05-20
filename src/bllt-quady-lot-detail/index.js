@@ -109,7 +109,7 @@ const onComment = (value, updateState) =>{
 
 
 
-const view = (state, { updateState }) => {
+const view = (state, { updateState, dispatch }) => {
 	return (
 		<div>
 			<now-modal
@@ -168,7 +168,7 @@ const view = (state, { updateState }) => {
 
 			<div className="sn-list-header">
 				<div className="sn-list-header-title-container">
-					<now-button slot="trigger" icon="chevron-left-fill" size="md" on-click={() =>dispatch("EVENT_QUADY_BACK_TO_LIST", {})} />
+					<now-button className="margin-left-10" slot="trigger" icon="chevron-left-fill" size="md" on-click={() =>dispatch("EVENT_QUADY_BACK_TO_LIST", {})} />
 					<now-popover interaction-type="dialog" className="popover-left"
 						positions={[{ "target": "bottom-center", "content": "top-center" }]}>
 						<now-button slot="trigger" icon="menu-fill" size="md" className="margin-x2" />
