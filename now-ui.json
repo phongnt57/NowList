@@ -1,6 +1,6 @@
 {
 	"components": {
-	    "bllt-quady-chg-pending-detail": {
+	    "bllt-quady-lot-list": {
 	        "innerComponents": [
 				"now-button",
 				"now-icon",
@@ -13,7 +13,7 @@
 			],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
-				"label": "Pending Chg Propety Detail",
+				"label": "Lot List",
 				"icon": "document-outline",
 				"description": "A description of my component",
 				"category": "primitives"
@@ -27,15 +27,8 @@
 					"readOnly": false,
 					"fieldType": "string",
 					"defaultValue": "https://jenkins.quady-cloud.com/trinity/api/sn"
-				  },
-				  {
-					"name": "pjtId",
-					"label": "pjt Id",
-					"description": "PJT Id",
-					"readOnly": false,
-					"fieldType": "string",
-					"defaultValue": ""
 				  }
+				 
 			],
 			"actions": [
 				{
@@ -47,16 +40,11 @@
 					"description":"Click detail",
 					 "label": "On Click Detail",
 					 "action": "EVENT_QUADY_DETAIL" 
-				},
-				{
-					"description":"Back",
-					 "label": "On Click to Back To List",
-					 "action": "EVENT_QUADY_BACK_TO_LIST" 
 				}
 			]
 			
 		
 	    }
 	},
-	"scopeName": "x_bllt_chg_pend_d"
+	"scopeName": "x_bllt_bllt_lot_0"
 }

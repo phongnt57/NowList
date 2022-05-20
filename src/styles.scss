@@ -9,6 +9,7 @@
     background-color: #f0f0f0;
     margin-bottom: 20px;
     max-height: 50px;
+    min-height: 50px;
 }
 
 .container {
@@ -27,7 +28,7 @@
     table-layout: auto;
     width: 100%;
 }
-.content-table {padding-left: 10px;}
+.content-table {padding-left: 10px; padding-right: 10px;}
 .now-grid th {
     background: RGB(var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255)));
     border-width: initial;
@@ -74,6 +75,7 @@
 .sn-list-header-title-container {
     align-items: center;
     display: flex;
+    padding-right: 5px;
 }
 
 .now-grid tr {
@@ -306,4 +308,10 @@ input:disabled, textarea:disabled {
 
 .bottom-menu {
   margin:40px;
+}
+
+.explain-text {
+    font-size: 12px;
+    margin-top: 10px;
+    
 }

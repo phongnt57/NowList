@@ -1,12 +1,12 @@
 {
-	"name": "@bllt/quady-chg-pending-detail",
+	"name": "@bllt/quady-lot-list",
 	"version": "0.0.1",
 	"private": false,
-	"description": "custom list",
+	"description": "custom detail",
 	"keywords": [
 		"ServiceNow",
 		"Now Experience UI Component",
-		"@bllt/quady-chg-pending-detail"
+		"@bllt/quady-lot-list"
 	],
 	"readme": "./README.md",
 	"engines": {

@@ -15,6 +15,7 @@ import styles from '../styles.scss';
 import { LIST_COMLUMN, LIST_ALL_COMLUMN, api, headers, DEFAULT_BASE_URL } from './constants'
 
 const requestSearchResults = ({ state, dispatch }) => {
+	console.log("COMPONENT_CONNECTED:" + state.selectedLotId)
 	dispatch("SEARCH_RESULTS_REQUESTED", {
 		linesPerPage: state.linesPerPage,
 		selectedPage: 1,
@@ -443,6 +444,25 @@ createCustomElement('bllt-quady-chg-property-pending', {
 	},
 	actionHandlers: {
 		[actionTypes.COMPONENT_CONNECTED]: requestSearchResults,
+		[actionTypes.COMPONENT_BOOTSTRAPPED]: ({action, state}) =>{
+			console.log("COMPONENT_BOOTSTRAPPED:"+ state.selectedLotId);
+
+		},
+		[actionTypes.COMPONENT_DOM_READY]: ({action, state}) =>{
+			console.log("COMPONENT_DOM_READY:"+ state.selectedLotId);
+
+		},
+		[actionTypes.COMPONENT_PROPERTY_CHANGED ]: ({action, state}) =>{
+			console.log("COMPONENT_PROPERTY_CHANGED:"+ state.selectedLotId);
+		},
+
+		[actionTypes.COMPONENT_RENDER_REQUESTED  ]: ({action, state}) =>{
+			console.log("COMPONENT_RENDER_REQUESTED:"+ state.selectedLotId);
+		},
+		[actionTypes.COMPONENT_RENDER_REQUESTED  ]: ({action, state}) =>{
+			console.log("COMPONENT_DISCONNECTED:"+ state.selectedLotId);
+		},
+
 
 		"NOW_MODAL#FOOTER_ACTION_CLICKED": ({ action, state, updateState, dispatch }) => {
 			console.log(action);
