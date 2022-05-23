@@ -1,10 +1,11 @@
 {
 	"components": {
-		"bllt-quady-chg-property-list": {
+		"bllt-quady-rfc-detail": {
 			"innerComponents": [
 				"now-button",
 				"now-icon",
 				"now-popover",
+				"now-card",
 				"now-card",
 				"now-modal",
 				"now-split-button",
@@ -16,7 +17,7 @@
 					"global.core",
 					"global.landing-page"
 				],
-				"label": "Change Property List",
+				"label": "RFC Detail",
 				"icon": "document-outline",
 				"description": "A description of my component",
 				"category": "primitives"
@@ -29,22 +30,25 @@
 					"readOnly": false,
 					"fieldType": "string",
 					"defaultValue": "https://jenkins.quady-cloud.com/trinity/api/sn"
+				},
+				{
+					"name": "rfcId",
+					"label": "RFC id",
+					"description": "Ar",
+					"readOnly": false,
+					"fieldType": "string",
+					"defaultValue": ""
 				}
 			],
 			
 			"actions": [
 				{
-					"description":"Click new",
-					 "label": "On Click New",
-					 "action": "EVENT_QUADY_CREATE"
-				},
-				{
-					"description":"Click detail",
-					 "label": "On Click Detail",
-					 "action": "EVENT_QUADY_DETAIL" 
+					"description":"Click back",
+					 "label": "On Click Back",
+					 "action": "EVENT_QUADY_BACK_TO_LIST" 
 				}
 			]
 		}
 	},
-	"scopeName": "x_bllt_chng_10"
+	"scopeName": "x_bllt_rfc_d_10"
 }

@@ -39,16 +39,6 @@
 			],
 			"actions": [
 				{
-					"description":"Click new",
-					 "label": "On Click New",
-					 "action": "EVENT_QUADY_CREATE"
-				},
-				{
-					"description":"Click detail",
-					 "label": "On Click Detail",
-					 "action": "EVENT_QUADY_DETAIL" 
-				},
-				{
 					"description":"Back",
 					 "label": "On Click to Back To List",
 					 "action": "EVENT_QUADY_BACK_TO_LIST" 
@@ -58,5 +48,5 @@
 		
 	    }
 	},
-	"scopeName": "x_bllt_chg_pend_d"
+	"scopeName": "x_bllt_chg_p_d_10"
 }

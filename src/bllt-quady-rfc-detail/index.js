@@ -6,7 +6,6 @@ import '@servicenow/now-button';
 import '@servicenow/now-popover';
 import '@servicenow/now-modal';
 import '@servicenow/now-card';
-import '@servicenow/now-input';
 
 
 const initRfc = ({ state, dispatch }) => {
@@ -67,7 +66,7 @@ const onComment = (comment, updateState) => {
 };
 
 
-const view = (state, {updateState}) => {
+const view = (state, {updateState, dispatch}) => {
 	const subjectRef = createRef();
 	const summaryRef = createRef();
 	const contentsRef = createRef();

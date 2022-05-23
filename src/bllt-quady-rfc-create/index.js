@@ -6,7 +6,6 @@ import '@servicenow/now-button';
 import '@servicenow/now-popover';
 import '@servicenow/now-modal';
 import '@servicenow/now-card';
-import '@servicenow/now-input';
 
 
 const onSubject = (subjectRef, e, updateState) => {
@@ -42,7 +41,7 @@ const openPopup = (updateState) => {
 	updateState({openModal: true});
 };
 
-const view = (state, {updateState}) => {
+const view = (state, {updateState, dispatch}) => {
 	const subjectRef = createRef();
 	const summaryRef = createRef();
 	const contentsRef = createRef();
@@ -67,10 +66,8 @@ const view = (state, {updateState}) => {
 					{/*<now-icon icon="chevron-left-fill" size="md"></now-icon>*/}
 					{/*<now-button title="" aria-label="Back" className="btn btn-default icon-chevron-left navbar-btn"*/}
 							{/*role="link"><now-icon icon="chevron-left-fill" size="md"></now-icon></now-button>*/}
-					<now-popover interaction-type="dialog"
-								 positions={[{"target": "bottom-center", "content": "top-center"}]}>
-						<now-button slot="trigger" icon="chevron-left-fill" size="md"/>
-					</now-popover>
+					
+						<now-button onclick={() => dispatch("EVENT_QUADY_BACK_TO_LIST", { })} slot="trigger" icon="chevron-left-fill" size="md"/>
 					<now-popover interaction-type="dialog" className="popover-left"
 								 positions={[{"target": "bottom-center", "content": "top-center"}]}>
 						<now-button slot="trigger" icon="menu-fill" size="md"/>
@@ -151,7 +148,7 @@ const view = (state, {updateState}) => {
 	);
 };
 
-createCustomElement('bllt-rfc-create', {
+createCustomElement('bllt-quady-rfc-create', {
 	renderer: {type: snabbdom},
 	view,
 	styles,

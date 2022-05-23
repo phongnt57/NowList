@@ -9,6 +9,7 @@
     background-color: #f0f0f0;
     margin-bottom: 20px;
     max-height: 50px;
+    min-height: 50px;
 }
 
 .container {
@@ -27,7 +28,7 @@
     table-layout: auto;
     width: 100%;
 }
-.content-table {padding-left: 10px;}
+.content-table {padding-left: 10px; padding-right: 10px;}
 .now-grid th {
     background: RGB(var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255)));
     border-width: initial;
@@ -74,6 +75,7 @@
 .sn-list-header-title-container {
     align-items: center;
     display: flex;
+    padding-right: 5px;
 }
 
 .now-grid tr {
@@ -112,6 +114,7 @@ tr:nth-child(even) {
     margin-right: 5px;
 
 }
+.margin-left-10 { margin-left: 10px;}
 
 input[type=text], select{
 
@@ -301,9 +304,22 @@ input[type=checkbox] {
 input:disabled, textarea:disabled {
     background-color: rgb(204, 204, 204);
 }
+
+.bottom-paging {
+    input:disabled {
+        background-color: white;
+    }
+
+}
 .max-width-50 {max-width: 50% !important;}
   
 
 .bottom-menu {
   margin:40px;
+}
+
+.explain-text {
+    font-size: 12px;
+    margin-top: 10px;
+    
 }

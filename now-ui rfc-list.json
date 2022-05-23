@@ -1,10 +1,11 @@
 {
 	"components": {
-		"bllt-quady-chg-property-list": {
+		"bllt-quady-rfc-list": {
 			"innerComponents": [
 				"now-button",
 				"now-icon",
 				"now-popover",
+				"now-card",
 				"now-card",
 				"now-modal",
 				"now-split-button",
@@ -16,7 +17,7 @@
 					"global.core",
 					"global.landing-page"
 				],
-				"label": "Change Property List",
+				"label": "RFC List",
 				"icon": "document-outline",
 				"description": "A description of my component",
 				"category": "primitives"
@@ -46,5 +47,5 @@
 			]
 		}
 	},
-	"scopeName": "x_bllt_chng_10"
+	"scopeName": "x_bllt_rfc_10"
 }
