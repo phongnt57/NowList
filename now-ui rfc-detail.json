@@ -1,6 +1,6 @@
 {
 	"components": {
-		"bllt-quady-rfc-create": {
+		"bllt-quady-rfc-detail": {
 			"innerComponents": [
 				"now-button",
 				"now-icon",
@@ -17,7 +17,7 @@
 					"global.core",
 					"global.landing-page"
 				],
-				"label": "RFC Create",
+				"label": "RFC Detail",
 				"icon": "document-outline",
 				"description": "A description of my component",
 				"category": "primitives"
@@ -50,5 +50,5 @@
 			]
 		}
 	},
-	"scopeName": "x_bllt_rfc_c_10"
+	"scopeName": "x_bllt_rfc_d_10"
 }
