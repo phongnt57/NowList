@@ -1,0 +1,49 @@
+{
+	"components": {
+	    "bllt-quady-relbaseline-detail": {
+	        "innerComponents": [
+				"now-button",
+				"now-icon",
+				"now-popover",
+				"now-card",
+				"now-modal",
+				"now-split-button",
+				"now-tabs",
+				"now-alert"
+			],
+			"uiBuilder": {
+				"associatedTypes": ["global.core", "global.landing-page"],
+                "label": "RB create Component",
+				"icon": "document-outline",
+				"description": "A description of my component",
+				"category": "primitives"
+			},
+			"properties": [
+				{
+					"name": "apiUrl",
+					"label": "API endpoint",
+					"description": "Ar",
+					"readOnly": false,
+					"fieldType": "string",
+					"defaultValue": "http://18.178.235.108:8089/trinity/api"
+				},
+				{
+					"name": "lotId",
+					"label": "Lot ID",
+					"description": "Ar",
+					"readOnly": false,
+					"fieldType": "string",
+					"defaultValue": ""
+				}
+			],
+			"actions": [
+				{
+					"description":"Back to list",
+					"label": "Back to list",
+					"action": "EVENT_QUADY_BACK_TO_LIST"
+				}
+			]
+	    }
+	},
+	"scopeName": "x_bllt_bllt_rfc_d0"
+}
