@@ -1,12 +1,12 @@
 {
-	"name": "@bllt/quady-lot-detail",
+	"name": "@bllt/quady-rfc-list",
 	"version": "0.0.1",
 	"private": false,
 	"description": "custom detail",
 	"keywords": [
 		"ServiceNow",
 		"Now Experience UI Component",
-		"@bllt/quady-lot-detail"
+		"@bllt/quady-rfc-list"
 	],
 	"readme": "./README.md",
 	"engines": {

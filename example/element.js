@@ -1,4 +1,3 @@
-import '../src/bllt-quady-list-component';
 import '../src/bllt-quady-chg-property-list'
 import '../src/bllt-quady-chg-property-pending'
 import '../src/bllt-quady-chg-property-approved'
@@ -8,6 +7,7 @@ import '../src/bllt-quady-chg-approved-detail'
 import '../src/bllt-quady-chgpr-create'
 import '../src/bllt-quady-lot-create'
 import '../src/bllt-quady-lot-detail'
+import '../src/bllt-quady-rfc-list'
 
 const el = document.createElement('DIV');
 document.body.appendChild(el);
@@ -23,9 +23,9 @@ document.body.appendChild(el);
 // el.innerHTML = `		
 // <bllt-quady-chg-property-pending></bllt-quady-chg-property-pending>
 // `;
-el.innerHTML = `		
-<bllt-quady-chg-property-approved></bllt-quady-chg-property-approved>
-`;
+// el.innerHTML = `		
+// <bllt-quady-chg-property-approved></bllt-quady-chg-property-approved>
+// `;
 
 // el.innerHTML = `		
 // <bllt-quady-lot-list></bllt-quady-lot-list>
@@ -48,6 +48,11 @@ el.innerHTML = `
 // el.innerHTML = `		
 // <bllt-quady-lot-detail></bllt-quady-lot-detail>
 // `;
+
+el.innerHTML = `		
+<bllt-quady-rfc-list></bllt-quady-rfc-list>
+`;
+
 
 
 

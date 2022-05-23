@@ -5,10 +5,11 @@
 // import './bllt-quady-lot-list'
 // import './bllt-quady-chg-pending-detail'
 // import './bllt-quady-chg-approved-detail'
-import './bllt-quady-lot-detail'
+// import './bllt-quady-lot-detail'
 // import './bllt-quady-lot-create'
 // import './bllt-quady-chgpr-create'
 // import './bllt-quady-chgpr-detail'
+import './bllt-quady-rfc-list'
 
 
 

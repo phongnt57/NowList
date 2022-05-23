@@ -67,7 +67,7 @@ const onCheckChange = (id, state, updateState) => {
 
 }
 
-const view = (state, {updateState}) => {
+const view = (state, {updateState ,dispatch}) => {
 	const referIDRef = createRef();
 	const referCatRef = createRef();
 	const assigneeRef = createRef();
@@ -94,10 +94,10 @@ const view = (state, {updateState}) => {
 					{/*<now-icon icon="chevron-left-fill" size="md"></now-icon>*/}
 					{/*<now-button title="" aria-label="Back" className="btn btn-default icon-chevron-left navbar-btn"*/}
 							{/*role="link"><now-icon icon="chevron-left-fill" size="md"></now-icon></now-button>*/}
-					<now-popover interaction-type="dialog"
-								 positions={[{"target": "bottom-center", "content": "top-center"}]}>
-						<now-button slot="trigger" icon="chevron-left-fill" size="md"/>
-					</now-popover>
+				
+						<now-button
+						     on-click={() => dispatch("EVENT_QUADY_BACK_TO_LIST", { })}  
+							  icon="chevron-left-fill" size="md"/>
 					<now-popover interaction-type="dialog" className="popover-left"
 								 positions={[{"target": "bottom-center", "content": "top-center"}]}>
 						<now-button slot="trigger" icon="menu-fill" size="md"/>
@@ -448,7 +448,7 @@ createCustomElement('bllt-quady-chgpr-create', {
 	},
 	actionHandlers: {
 		[actionTypes.COMPONENT_CONNECTED]: initChangeProperty,
-		"NOW_MODAL#FOOTER_ACTION_CLICKED" : ({ action, state, updateState }) => {
+		"NOW_MODAL#FOOTER_ACTION_CLICKED" : ({ action, state, updateState, dispatch }) => {
 			const url = "https://jenkins.quady-cloud.com/trinity/api/sn/chgproperty/create/" + state.properties.lotId;
 			let data = {
 				referenceId: state.referenceId,
@@ -473,6 +473,7 @@ createCustomElement('bllt-quady-chgpr-create', {
 					return response.json();
 				})
 				.then(function (result) {
+					dispatch("EVENT_QUADY_BACK_TO_LIST", { })
 
 				})
 				.catch(function (error) {

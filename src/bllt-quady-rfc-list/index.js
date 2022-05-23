@@ -8,8 +8,8 @@ import '@servicenow/now-split-button'
 import '../choose-column'
 
 import '@servicenow/now-card'
-import styles from './styles.scss';
-import { LIST_COMLUMN, api, headers } from './constants'
+import styles from '../styles.scss';
+import { LIST_COMLUMN, api, headers, DEFAULT_BASE_URL } from './constants'
 import { LIST_ALL_COMLUMN } from '../choose-column/constants';
 
 const requestSearchResults = ({ state, dispatch }) => {
@@ -104,7 +104,7 @@ const view = (state, { updateState, dispatch }) => {
 				<div className="sn-list-header-title-container">
 					<now-popover interaction-type="dialog" positions={[{ "target": "bottom-center", "content": "top-center" }]}
 					>
-						<now-icon className="cursor-pointer margin-x2" slot="trigger" icon="menu-fill" size="lg" />
+						<now-button className="cursor-pointer margin-x2" slot="trigger" icon="menu-fill" size="md" />
 						<now-card slot="content">
 							<div>
 								{[5, 10, 15, 20, 50, 100].map(item => (
@@ -123,7 +123,7 @@ const view = (state, { updateState, dispatch }) => {
 
 					</now-popover>
 
-					<h2 className="now-heading -header -secondary"> RFC list</h2>
+					<h4 className="now-heading -header -secondary"> RFC List</h4>
 					<div className="margin-x2">Search</div>
 					<input className="header-input" type="text"
 						ref={searchRef}
@@ -148,7 +148,7 @@ const view = (state, { updateState, dispatch }) => {
 					></now-split-button>
 
 
-					<now-button onclick={() => dispatch("EVENT_QUADY_CREATE_RFC", { 'eventpayload': 'createnew' })}
+					<now-button onclick={() => dispatch("EVENT_QUADY_CREATE", { 'eventpayload': 'createnew' })}
 						className="margin-x2" label="New" variant="primary" size="md"  ></now-button>
 
 
@@ -198,7 +198,7 @@ const view = (state, { updateState, dispatch }) => {
 												<td>
 													<div className="sn-text-link cursor-pointer">
 														<a className="text-link"
-															on-click={() => dispatch("EVENT_QUADY_DETAIL_RFC", { 'event-payload': item.rfcId })}
+															on-click={() => dispatch("EVENT_QUADY_DETAIL", { 'detail': item.rfcId })}
 														>{item.rfcId}</a>
 													</div>
 												</td>
@@ -302,7 +302,7 @@ const onCheckChange = (id, state, updateState) => {
 
 }
 
-createCustomElement('bllt-quady-list-component', {
+createCustomElement('bllt-quady-rfc-list', {
 	renderer: { type: snabbdom },
 	view,
 	styles,
@@ -320,7 +320,7 @@ createCustomElement('bllt-quady-list-component', {
 		comment: "",
 	},
 	properties: {
-		apiUrl: { default: "http://18.178.235.108:8089/trinity/api" }
+		apiUrl: { default: DEFAULT_BASE_URL }
 	},
 	actionHandlers: {
 		[actionTypes.COMPONENT_CONNECTED]: requestSearchResults,
@@ -383,12 +383,11 @@ createCustomElement('bllt-quady-list-component', {
 			};
 			if (payload.searchKeyword) body.searchKeyword = payload.searchKeyword;
 			else if (state.searchKeyword) body.searchKeyword = state.searchKeyword;
-			const url = "https://api.jsonbin.io/b/626e53e6019db46796940c1a";
-			//const url = state.properties.apiUrl + api.rfc_list.path;
+			const url = state.properties.apiUrl + api.rfc_list.path;
 			fetch(url, {
-				method: "get",
+				method: api.rfc_list.method,
 				headers: headers,
-				// body: JSON.stringify(body)
+				 body: JSON.stringify(body)
 			})
 				.then(function (response) {
 					return response.json();

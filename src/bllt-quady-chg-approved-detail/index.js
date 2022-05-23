@@ -298,26 +298,26 @@ const view = (state, { updateState, dispatch }) => {
 						<table className="auto content-table" role="grid">
 							<thead>
 								<tr>
-									<th>Request ID</th>
-									<th>Subject</th>
-									<th>Request Time</th>
-									<th>Submitter</th>
-									<th>Group</th>
+									<th>Approved Time</th>
 									<th>Status</th>
+									<th>Approved By</th>
+									<th>Approved Group</th>
+									<th>Comment</th>
 								</tr>
 
 							</thead>
 							<tbody className="table-body">
 								{state.histories.map(item => (
 									<tr>
-										<td>{item.requestId}</td>
-										<td>{item.subject}</td>
-										<td>{item.requestTime}</td>
-										<td>{item.submitter}</td>
-										<td>{item.group}</td>
+										<td>{item.approvedTime}</td>
 										<td>
-											<div className={`status-label amStatus${item.statusId}`}>{item.status}</div>
+										<div className={`status-label amStatus${item.statusId}`}>{item.status}</div>
 										</td>
+										
+										<td>{item.approvedBy}</td>
+										<td>{item.approverGroup}</td>
+										<td>{item.comment}</td>
+										
 
 
 									</tr>

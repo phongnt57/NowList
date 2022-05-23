@@ -23,7 +23,7 @@ export const LIST_COMLUMN = [
 export const api = {
 	rfc_list : {
 		path: "/rfc/list",
-		method: 'get'
+		method: 'post'
 	},
 	delete_all : {
 		path: "/rfc/removeAll",
@@ -36,3 +36,5 @@ export const headers =  {
 	'Content-Type': 'application/json',
 	'Authorization': 'RyEuBNoMKNpvZozFQcRhsic6Sbb760yVliYqixM5VhFPd3uDKA'
 }
+
+export const DEFAULT_BASE_URL= "https://jenkins.quady-cloud.com/trinity/api/sn";
