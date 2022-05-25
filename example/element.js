@@ -9,6 +9,7 @@ import '../src/bllt-quady-lot-create'
 import '../src/bllt-quady-lot-detail'
 import '../src/bllt-quady-rfc-list'
 import '../src/bllt-quady-rfc-detail'
+import '../src/bllt-quady-ru-list'
 
 
 const el = document.createElement('DIV');
@@ -59,8 +60,12 @@ document.body.appendChild(el);
 // <bllt-quady-rfc-list></bllt-quady-rfc-list>
 // `;
 
+// el.innerHTML = `		
+// <bllt-quady-rfc-detail></bllt-quady-rfc-detail>
+// `;
+
 el.innerHTML = `		
-<bllt-quady-rfc-detail></bllt-quady-rfc-detail>
+<bllt-quady-ru-list></bllt-quady-ru-list>
 `;
 
 

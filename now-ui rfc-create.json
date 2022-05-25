@@ -30,15 +30,8 @@
 					"readOnly": false,
 					"fieldType": "string",
 					"defaultValue": "https://jenkins.quady-cloud.com/trinity/api/sn"
-				},
-				{
-					"name": "rfcId",
-					"label": "RFC id",
-					"description": "Ar",
-					"readOnly": false,
-					"fieldType": "string",
-					"defaultValue": ""
 				}
+			
 			],
 			
 			"actions": [
