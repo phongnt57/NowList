@@ -9,8 +9,8 @@ import '@servicenow/now-card';
 import '@servicenow/now-input';
 
 
-const initReleaseBaseline = ({ state, dispatch }) => {
-	dispatch("INIT_RELEASE_BASELINE", {});
+const initReleaseUnit = ({ state, dispatch }) => {
+	dispatch("INIT_RELEASE_UNIT", {});
 };
 
 const onSubject = (subjectRef, e, updateState) => {
@@ -32,6 +32,26 @@ const openPopup = (updateState) => {
 	updateState({openModal: true});
 };
 
+const onCheckChangeAll = (ref, state, updateState) => {
+	if (ref.current.checked) {
+		let seletedIds = state.changeProperties.map(item => item.changeId);
+		updateState({ selectIds: seletedIds });
+	} else updateState({ selectIds: [] });
+
+};
+
+const onCheckChange = (id, state, updateState) => {
+	let selectIds = [...state.selectIds];
+	let index = selectIds.indexOf(id);
+	if (index > -1) {
+		selectIds.splice(index, 1);
+	} else {
+		selectIds.push(id);
+	}
+	updateState({ selectIds: selectIds });
+
+}
+
 const onAgreementCheck =  (ref, state, updateState) => {
 	if (ref.current.checked) {
 		updateState({ submitAgreement: true });
@@ -43,13 +63,14 @@ const onAgreementCheck =  (ref, state, updateState) => {
 const view = (state, {updateState}) => {
 	const subjectRef = createRef();
 	const summaryRef = createRef();
+	const checkBoxRef = createRef();
 	const agreementRef = createRef();
 	return (
 		<div>
 			<now-modal
 				opened={state.openModal}
 				size='sm'
-				header-label='Create New Release Baseline'
+				header-label='Create New Release Unit'
 				footer-actions='[
              {
               "variant": "primary",
@@ -57,7 +78,7 @@ const view = (state, {updateState}) => {
               }
              ]'
 			>
-				Do you want to save Release Baseline?
+				Do you want to save Release Unit?
 			</now-modal>
 			<div className="sn-list-header">
 				<div className="sn-list-header-title-container">
@@ -73,7 +94,7 @@ const view = (state, {updateState}) => {
 						<now-button slot="trigger" icon="menu-fill" size="md"/>
 					</now-popover>
 					<h4 className="now-heading -header -secondary">
-						<div>Create Release Baseline</div>
+						<div>Create Release Unit</div>
 						<div>{state.lotName}</div>
 					</h4>
 				</div>
@@ -92,12 +113,12 @@ const view = (state, {updateState}) => {
 							<span>[BM001008E] : There are some restrictions to create Release Unit as in the followings. Are you sure you want to create Release Unit?</span>
 						</div>
 						{state.errorMessages.map(item => (
-							<div className="text-danger now-grid"><now-icon icon="triangle-exclamation-fill" size="md"></now-icon>{item}</div>))}
+						<div className="text-danger now-grid"><now-icon icon="triangle-exclamation-fill" size="md"></now-icon>{item}</div>))}
 					</div>): ''
 			}
 			<div className="form-group">
 				<div className="change-property-info container now-grid">
-					<h3 className="separate-line">Baseline Information</h3>
+					<h3 className="separate-line">Unit Information</h3>
 					<div className="sn-main-content">
 						<div>
 							<label htmlFor="short_description"
@@ -130,15 +151,96 @@ const view = (state, {updateState}) => {
 						</div>
 					</div>
 				</div>
+				<div className="container now-grid">
+					<h3 className="separate-line">Change Property Selection</h3>
+					<div className="rfc-table">
+						<table className="auto" role="grid">
+							<thead>
+							<tr>
+								<th className="-checkbox">
+									<input
+										ref={checkBoxRef}
+										type="checkbox"
+										on-change={(e) => onCheckChangeAll(checkBoxRef, state, updateState)}/>
+								</th>
+								{state.selectedColumns.map(item => (
+									<th className="list-column-header" dir="ltr" id="id_0" role="columnheader">
+										<div className="sn-text-link hide-columnreorder-off">
+											<a type="button">
+												<span className="column-resizing-enabled">{item.label}</span>
+											</a>
+
+										</div>
+									</th>
+
+								))}
+
+
+							</tr>
+
+							</thead>
+							<tbody className="table-body">
+							{state.changeProperties.length ? (
+									state.changeProperties.map(item => (
+										<tr className="row">
+											<td>
+												<div className="sn-grid-checkbox">
+													<input
+														checked={state.selectIds.indexOf(item.changeId) > -1}
+														type="checkbox"
+														on-change={() => onCheckChange(item.changeId, state, updateState)}/>
+												</div>
+
+											</td>
+											{state.selectedColumns.map(column => {
+												if (column.key == "rfc") {
+													return (
+														<td>
+															{item[column.key] && item[column.key].length > 0?
+																item[column.key].map(rfc => (<div className="sn-text-link cursor-pointer">
+																		<a>{rfc["rfcId"]}</a>
+																	</div>)) : ''
+															}
+														</td>
+
+
+													);
+												} else {
+													return (
+														<td>
+															<div className="sn-text-link">
+																{item[column.key]}
+															</div>
+														</td>
+
+													);
+
+												}
+											})}
+
+
+										</tr>
+									))
+								) :
+								(
+									<div className="bottom-paging">Data is empty</div>
+								)
+							}
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
 			</div>
 			<div>
-				<now-button disabled={!state.subject || !state.summary || (state.errorMessages && state.errorMessages.length > 0 && !state.submitAgreement)} className="margin-x2 submit-button" label="Submit" variant="primary" size="md" onclick={() => openPopup(updateState)}/>
+				<now-button disabled={!state.subject || !state.summary || (state.errorMessages && state.errorMessages.length > 0 && !state.submitAgreement)} className="margin-x2 submit-button" label="Submit" variant="primary" size="md"/>
 			</div>
 		</div>
 	);
 };
 
-createCustomElement('bllt-quady-relbaseline-create', {
+createCustomElement('bllt-quady-relunit-create', {
 	renderer: {type: snabbdom},
 	view,
 	styles,
@@ -151,23 +253,46 @@ createCustomElement('bllt-quady-relbaseline-create', {
 		summary: "",
 		contents: "",
 		submitAgreement: false,
-		url: ""
+		changeProperties: [],
+		selectedColumns: [
+			{
+				"key": "changeId","label": "Change ID"
+			},
 
+			{
+				"key": "referenceId","label": "Reference ID"
+			},
+			{
+				"key": "subject","label": "Subject"
+			},
+			{
+				"key": "submitter","label": "Submitter"
+			},
+			{
+				"key": "approvedTime","label": "Approved Time"
+			},
+			{
+				"key": "rfc","label": "RFC Items"
+			},
+
+		],
+		selectIds: []
 	},
 	properties: {
 		lotId: {default: "LOT-2205120002"}
 	},
 	actionHandlers: {
-		[actionTypes.COMPONENT_CONNECTED]: initReleaseBaseline,
+		[actionTypes.COMPONENT_CONNECTED]: initReleaseUnit,
 		"NOW_MODAL#FOOTER_ACTION_CLICKED" : ({ action, state, updateState, dispatch }) => {
-			const API = "https://jenkins.quady-cloud.com/trinity/api/sn/ru/baseline/create/" + state.properties.lotId;
+			const API = "https://jenkins.quady-cloud.com/trinity/api/sn/ru/create/" + state.properties.lotId;
 			let data = {
 				subject: state.subject,
 				summary: state.summary,
-				submitAgreement: state.submitAgreement
+				submitAgreement: state.submitAgreement,
+				changePropertyIds: state.selectIds
 			};
 			fetch(API, {
-				method: 'put',
+				method: 'post',
 				headers: {
 					'Accept': 'application/json, text/plain, */*',
 					'Content-Type': 'application/json',
@@ -193,12 +318,12 @@ createCustomElement('bllt-quady-relbaseline-create', {
 		},
 
 
-		SUBMIT_RELEASE_BASELINE_REQUESTED: ({ action, state, updateState }) => {
+		SUBMIT_RELEASE_UNIT_REQUESTED: ({ action, state, updateState }) => {
 
 		},
 
-		INIT_RELEASE_BASELINE: ({action, state, updateState}) => {
-			const url = "https://jenkins.quady-cloud.com/trinity/api/sn/ru/baseline/init/" + state.properties.lotId;
+		INIT_RELEASE_UNIT: ({action, state, updateState}) => {
+			const url = "https://jenkins.quady-cloud.com/trinity/api/sn/ru/init/" + state.properties.lotId;
 			fetch(url, {
 				method: 'get',
 				headers: {
@@ -209,13 +334,14 @@ createCustomElement('bllt-quady-relbaseline-create', {
 				//body: JSON.stringify(data)
 			})
 				.then(function (response) {
-					//updateState({openModal: false});
+					updateState({openModal: false});
 					return response.json();
 				})
 				.then(function (result) {
 					updateState({
-						errorMessages: result.messages,
-						lotName: result.lotName
+						//errorMessages: result.messages,
+						lotName: result.lotName,
+						changeProperties: result.changeProperties
 					});
 				})
 				.catch(function (error) {
@@ -225,3 +351,4 @@ createCustomElement('bllt-quady-relbaseline-create', {
 		}
 	}
 });
+
